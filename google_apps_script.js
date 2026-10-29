@@ -1,44 +1,16 @@
 /**
  * ============================================================================
- * POOJRA SILVASSA - GOOGLE APPS SCRIPT FOR SPIN & WIN FESTIVE LEADS
+ * POOJRA SILVASSA - GOOGLE APPS SCRIPT WEBHOOK
  * ============================================================================
- * Target Google Sheet URL:
- * https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit
+ * Target Google Sheet:
+ * https://docs.google.com/spreadsheets/d/1EX0eqM7-8atPIc57zaOmJOoG0V6zPe7Ovl04laMRH1M/edit
  * 
- * Target Sheet ID: 1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY
- * ============================================================================
- * 
- * SETUP INSTRUCTIONS (Sirf 1 Minute):
- * -----------------------------------
- * 1. Apni di gayi Google Sheet open karein:
- *    https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit
- * 
- * 2. Top menu me "Extensions" > "Apps Script" par click karein.
- * 
- * 3. Wahan jo bhi pehle se code likha ho use delete (Ctrl + A -> Delete) karein,
- *    aur yeh pura code paste kar dein.
- * 
- * 4. Ctrl + S dabakar save karein.
- * 
- * 5. Top-right corner me blue "Deploy" button > "New deployment" par click karein.
- * 
- * 6. Left side gear icon (Select type) me "Web app" choose karein:
- *    - Description: "Poojra Spin Leads"
- *    - Execute as: "Me"
- *    - Who has access: "Anyone" ⚠️ (ZAROORI: "Anyone" hi select karein)
- * 
- * 7. Click "Deploy" > "Authorize access" > apna Google account select karein >
- *    "Advanced" > "Go to Poojra Leads (unsafe)" > "Allow".
- * 
- * 8. Deployment complete hone par aapko ek Web App URL milega:
- *    (e.g., https://script.google.com/macros/s/AKfycb.../exec)
- * 
- * 9. Yeh URL copy karke index.html me GOOGLE_SHEET_URL me paste kar dein!
+ * Target Sheet ID: 1EX0eqM7-8atPIc57zaOmJOoG0V6zPe7Ovl04laMRH1M
+ * Columns: Name | Mobile Number | Brand | Prize Won | Coupon Code | Timestamp
  * ============================================================================
  */
 
-// Target Sheet ID
-var SPREADSHEET_ID = "1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY";
+var SPREADSHEET_ID = "1EX0eqM7-8atPIc57zaOmJOoG0V6zPe7Ovl04laMRH1M";
 
 function doPost(e) {
   var lock = LockService.getScriptLock();
@@ -54,28 +26,30 @@ function doPost(e) {
     
     var sheet = doc.getActiveSheet();
 
-    // 1. Agar sheet blank hai toh Header Row banayein
+    // Headers check (matches user's columns: Name, Mobile Number, Brand)
     if (sheet.getLastRow() === 0) {
       sheet.appendRow([
-        "Timestamp",
-        "Customer Name",
-        "Contact Number",
-        "Konsa Mobile Liya (Purchased Model)",
+        "Name",
+        "Mobile Number",
+        "Brand",
         "Prize Won",
         "Coupon Code",
-        "Store Location",
-        "Status"
+        "Timestamp"
       ]);
-
-      var headerRange = sheet.getRange(1, 1, 1, 8);
+      var headerRange = sheet.getRange(1, 1, 1, 6);
       headerRange.setBackground("#070A2B");
       headerRange.setFontColor("#F5C542");
       headerRange.setFontWeight("bold");
-      headerRange.setFontSize(11);
       sheet.setFrozenRows(1);
+    } else if (sheet.getLastColumn() < 6) {
+      sheet.getRange(1, 4, 1, 3).setValues([["Prize Won", "Coupon Code", "Timestamp"]]);
+      var extraHeader = sheet.getRange(1, 4, 1, 3);
+      extraHeader.setBackground("#070A2B");
+      extraHeader.setFontColor("#F5C542");
+      extraHeader.setFontWeight("bold");
     }
 
-    // 2. Data Parse karein (JSON aur Form URL-encoded dono supported)
+    // Parse Data from Website (support JSON or URLSearchParams)
     var data = {};
     if (e.postData && e.postData.contents) {
       try {
@@ -89,33 +63,35 @@ function doPost(e) {
 
     var timestamp = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
     var name = data.name || data.cust_name || "N/A";
-    var phone = data.phone || data.contact || "N/A";
-    var mobileModel = data.mobile_model || data.mobileModel || "N/A";
+    var phone = data.phone || data.contact || data.number || data.mobile_number || "N/A";
+    var brand = data.brand || data.mobile_model || data.mobileModel || "N/A";
     var prize = data.prize || data.prize_name || "N/A";
     var coupon = data.coupon || data.coupon_code || "N/A";
-    var store = data.store || "Poojra Silvassa";
 
-    // 3. New Entry Append karein
+    // Row append directly into user's columns:
+    // Col A: Name
+    // Col B: Mobile Number
+    // Col C: Brand
+    // Col D: Prize Won
+    // Col E: Coupon Code
+    // Col F: Timestamp
     sheet.appendRow([
-      timestamp,
       name,
-      "'" + phone, // Apostrophe prevents dropping leading zero in Google Sheets
-      mobileModel,
+      "'" + phone, // Apostrophe preserves full 10-digit number
+      brand,
       prize,
       coupon,
-      store,
-      "New Claim"
+      timestamp
     ]);
 
     var lastRow = sheet.getLastRow();
-    sheet.getRange(lastRow, 1, 1, 8).setVerticalAlignment("middle");
+    sheet.getRange(lastRow, 1, 1, 6).setVerticalAlignment("middle");
 
     return ContentService
       .createTextOutput(JSON.stringify({
         result: "success",
         row: lastRow,
-        spreadsheetId: SPREADSHEET_ID,
-        message: "Lead recorded in Poojra Silvassa Sheet successfully!"
+        data: { name: name, phone: phone, brand: brand, prize: prize, coupon: coupon }
       }))
       .setMimeType(ContentService.MimeType.JSON);
 

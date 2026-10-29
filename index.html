@@ -1177,9 +1177,9 @@
             const soundBtn = document.getElementById('sound-btn');
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const navLinks = document.getElementById('main-nav-links');
-            // Target Google Sheet: https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit
-            // Target Sheet ID: 1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY
-            // Paste your deployed Web App URL from Apps Script below (see GOOGLE_SHEET_SETUP.md):
+            // Target Google Sheet: https://docs.google.com/spreadsheets/d/1EX0eqM7-8atPIc57zaOmJOoG0V6zPe7Ovl04laMRH1M/edit
+            // Target Sheet ID: 1EX0eqM7-8atPIc57zaOmJOoG0V6zPe7Ovl04laMRH1M
+            // Paste your deployed Web App URL from Apps Script below:
             const GOOGLE_SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
 
             const modalBackdrop = document.getElementById('winner-modal-backdrop');
@@ -1368,6 +1368,8 @@
                     timestamp: timeStr,
                     name: custName,
                     phone: custPhone,
+                    number: custPhone,
+                    brand: custMobile,
                     mobile_model: custMobile,
                     prize: prizeWonName,
                     coupon: currentCoupon,
