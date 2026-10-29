@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Poojra Silvassa | Navratri Spin &amp; Win</title>
+    <meta name="description" content="Celebrate Navratri with exciting offers, Neckband, Air Buds, Trolley Bags, Kitchen Sets, and jackpot prizes from Poojra Silvassa."/>
+    <link rel="icon" type="image/png" href="assets/images/logo.png"/>
+    
+    <!-- Demo CSS -->
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <style>
+        /* Precision enhancements */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #070A2B;
+        }
+
+        .brand-logo-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #f6c344;
+            box-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .wheel-label {
+            width: 22% !important;
+            justify-content: center;
+            padding-top: 0;
+            display: flex;
+            inset: auto;
+            transform: translate(-50%, -50%) !important;
+        }
+        .wheel-label span {
+            width: 100% !important;
+            transform: none !important;
+        }
+        .wheel-label svg {
+            width: clamp(14px, 1.8vw, 22px);
+            height: auto;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.7));
+        }
+        .wheel-label b {
+            font-size: clamp(0.52rem, 0.9vw, 0.74rem);
+            line-height: 1.05;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.85);
+            font-weight: 800;
+            letter-spacing: -0.2px;
+        }
+        .label-5 span, .label-9 span {
+            color: #fff;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.85);
+        }
+        .wheel {
+            transition: transform 5.8s cubic-bezier(0.12, 0.8, 0.18, 1);
+            will-change: transform;
+        }
+        .pointer.tick-jiggle {
+            transform: translateX(-50%) rotate(-12deg);
+            transition: transform 0.08s ease;
+        }
+
+        /* Fixed Confetti Canvas so it NEVER takes document height */
+        #confetti-canvas {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            pointer-events: none !important;
+            z-index: 99999 !important;
+            display: block;
+        }
+
+        /* Visible elements override (removing Next.js SSR opacity:0) */
+        .offer-card {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .step {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .stats-grid > div {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .testimonial > div {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .faq-item div[style] {
+            height: auto !important;
+        }
+
+
+
+        /* Clean Footer without excess space */
+        footer {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        .footer-bottom {
+            margin-bottom: 0 !important;
+            padding: 20px 10px !important;
+        }
+
+        /* Winner Modal Backdrop and popup */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(4, 7, 24, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        .modal-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .winner-modal {
+            background: linear-gradient(145deg, #101B3A 0%, #070B19 100%);
+            border: 2px solid #F5C542;
+            border-radius: 26px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px 24px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 50px rgba(245, 197, 66, 0.45), 0 25px 60px rgba(0, 0, 0, 0.85);
+            transform: scale(0.85);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .winner-modal::-webkit-scrollbar {
+            width: 6px;
+        }
+        .winner-modal::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 8px;
+        }
+        .winner-modal::-webkit-scrollbar-thumb {
+            background: rgba(245, 197, 66, 0.4);
+            border-radius: 8px;
+        }
+        .modal-backdrop.open .winner-modal {
+            transform: scale(1);
+        }
+        .winner-modal .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.2s ease;
+        }
+        .winner-modal .modal-close:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        .winner-icon-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d946ef 0%, #c026d3 100%);
+            border: 2.5px solid #F5C542;
+            box-shadow: 0 0 25px rgba(217, 70, 239, 0.5), 0 0 15px rgba(245, 197, 66, 0.4);
+            margin-bottom: 8px;
+        }
+        .winner-icon-wrap svg {
+            width: 32px;
+            height: 32px;
+            stroke-width: 2.2;
+            color: #fff;
+        }
+        .winner-icon {
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .winner-modal .eyebrow {
+            color: #F5C542;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            margin: 0 0 3px 0;
+        }
+        .winner-modal h2.win-headline {
+            font-size: 1.6rem;
+            color: #fff;
+            font-weight: 800;
+            margin: 0 0 4px 0;
+        }
+        .prize-won {
+            font-size: 1.45rem;
+            color: #FFE685;
+            display: block;
+            margin: 0 0 10px 0;
+            font-weight: 900;
+            text-shadow: 0 2px 10px rgba(245, 197, 66, 0.5);
+        }
+
+        .winner-modal .coupon {
+            background: rgba(0,0,0,0.55);
+            border: 1.5px dashed #F5C542;
+            border-radius: 12px;
+            padding: 9px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0 14px 0;
+        }
+        .coupon-label {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            display: block;
+            text-align: left;
+            letter-spacing: 0.5px;
+        }
+        .winner-modal .coupon strong {
+            color: #fff;
+            font-size: 1.15rem;
+            font-family: monospace;
+            letter-spacing: 1.5px;
+            display: block;
+            text-align: left;
+        }
+        .winner-modal .coupon button {
+            background: #F5C542;
+            color: #070B19;
+            font-weight: 800;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        .winner-modal .coupon button:hover {
+            background: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Claim Form Styles */
+        .claim-form-header {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(245, 197, 66, 0.2);
+            border-radius: 12px;
+            padding: 9px 12px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .claim-form-header h3 {
+            margin: 0 0 2px 0;
+            color: #FFFFFF;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        .claim-form-header p {
+            margin: 0;
+            color: #94A3B8;
+            font-size: 0.78rem;
+        }
+
+        .claim-gift-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #E2E8F0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .form-group label svg {
+            color: #F5C542;
+            flex-shrink: 0;
+            width: 15px;
+            height: 15px;
+        }
+        .form-group label .req {
+            color: #F43F5E;
+            font-weight: 900;
+        }
+        .form-group input {
+            background: rgba(13, 20, 48, 0.85);
+            border: 1.5px solid rgba(245, 197, 66, 0.35);
+            border-radius: 11px;
+            padding: 10px 13px;
+            color: #FFFFFF;
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+        .form-group input:focus {
+            border-color: #F5C542;
+            background: rgba(20, 31, 74, 0.95);
+            box-shadow: 0 0 0 3px rgba(245, 197, 66, 0.2);
+        }
+        .form-group input::placeholder {
+            color: #64748B;
+            font-size: 0.82rem;
+        }
+        .field-error {
+            font-size: 0.72rem;
+            color: #FB7185;
+            min-height: 12px;
+            display: block;
+        }
+
+        /* Submit Button */
+        .submit-claim-btn {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
+            border: 1.5px solid #FFE082;
+            border-radius: 13px;
+            color: #070B19;
+            font-weight: 900;
+            font-size: 1.02rem;
+            letter-spacing: 0.3px;
+            padding: 12px 18px;
+            cursor: pointer;
+            box-shadow: 0 5px 18px rgba(245, 158, 11, 0.45);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 4px;
+            width: 100%;
+        }
+        .submit-claim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.6);
+            background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #D97706 100%);
+        }
+        .submit-claim-btn:active {
+            transform: translateY(0);
+        }
+        .submit-claim-btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-footer-note {
+            text-align: center;
+            font-size: 0.72rem;
+            color: #64748B;
+            margin: 4px 0 0 0;
+        }
+
+        /* Success Card View */
+        .success-icon-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            border: 2.5px solid #34D399;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.55);
+            margin-bottom: 10px;
+        }
+        .success-badge-icon {
+            font-size: 2.3rem;
+        }
+        .success-eyebrow {
+            color: #34D399 !important;
+            letter-spacing: 1.5px;
+        }
+        .success-title {
+            color: #FFFFFF;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+        }
+        .success-summary-card {
+            background: rgba(15, 23, 62, 0.85);
+            border: 1.5px solid rgba(245, 197, 66, 0.35);
+            border-radius: 14px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: #CBD5E1;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .summary-row:last-child {
+            border-bottom: none;
+        }
+        .summary-row span {
+            color: #94A3B8;
+        }
+        .summary-row strong {
+            color: #FFFFFF;
+            font-weight: 700;
+        }
+        .summary-row.highlight strong {
+            color: #F5C542;
+            font-size: 0.92rem;
+        }
+        .summary-row code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 7px;
+            border-radius: 5px;
+            color: #38BDF8;
+            font-family: monospace;
+            font-size: 0.88rem;
+        }
+        .success-instructions {
+            font-size: 0.82rem;
+            color: #E2E8F0;
+            line-height: 1.45;
+            margin: 0 0 12px 0;
+        }
+        .spin-again-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #FFFFFF;
+            padding: 9px 16px;
+            border-radius: 18px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+        }
+        .spin-again-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #F5C542;
+        }
+
+        .whatsapp-claim-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #25D366;
+            color: #fff;
+            font-weight: 800;
+            font-size: 1rem;
+            padding: 12px 22px;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 5px 18px rgba(37, 211, 102, 0.5);
+            transition: transform 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .whatsapp-claim-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <!-- ==========================================================================
+             NAVBAR
+             ========================================================================== -->
+        <header class="navbar">
+            <a class="brand" href="#home" aria-label="Poojra Silvassa Home">
+                <img src="assets/images/logo.png" alt="Poojra Logo" class="brand-logo-img">
+                <span>
+                    <strong>POOJRA<span></span></strong>
+                    <small>Celebrate more together</small>
+                </span>
+            </a>
+
+            <nav class="nav-links" id="main-nav-links" aria-label="Primary navigation">
+                <a href="#home">Home</a>
+                <a href="#offers">Offers</a>
+                <a href="#spin-wheel">Prizes</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#faq">FAQ</a>
+                <button class="nav-spin mobile-only trigger-spin-btn">Spin now</button>
+            </nav>
+
+            <button class="nav-spin desktop-only trigger-spin-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg> 
+                Spin now
+            </button>
+
+            <button class="menu-button" id="mobile-menu-btn" aria-expanded="false" aria-label="Toggle menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+            </button>
+        </header>
+
+        <!-- ==========================================================================
+             HERO SECTION (Modeled after https://spinthewheeldemo.pages.dev/)
+             ========================================================================== -->
+        <section class="hero" id="home">
+            <div class="hero-art"></div>
+            <div class="hero-veil"></div>
+            <div class="spark-field" aria-hidden="true">
+                <i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i>
+                <i style="--i:6"></i><i style="--i:7"></i><i style="--i:8"></i><i style="--i:9"></i><i style="--i:10"></i><i style="--i:11"></i>
+                <i style="--i:12"></i><i style="--i:13"></i><i style="--i:14"></i><i style="--i:15"></i><i style="--i:16"></i><i style="--i:17"></i>
+            </div>
+
+            <div class="hero-content">
+                <!-- Left Intro -->
+                <div class="hero-intro">
+                    <p class="hero-kicker">
+                        <span></span> Festival of devotion <b>•</b> Festival of offers
+                    </p>
+                    <h1>
+                        Celebrate <span class="gold-text">Navratri</span><br/>
+                        with <span class="pink-text">Exciting Offers</span>
+                    </h1>
+                    <p class="hero-sub">
+                        Spin the wheel and unlock guaranteed gifts including Wireless Neckbands, Air Buds, Trolley Bags, 7 Pcs Kitchen Sets, Power Banks & exclusive festive deals in Silvassa!
+                    </p>
+                </div>
+
+                <!-- Right Wheel (The Centerpiece) -->
+                <div class="hero-wheel">
+                    <div class="wheel-stage" id="spin-wheel">
+                        <div class="wheel-orbit" aria-label="Prize wheel with 12 offers">
+                            
+                            <!-- Golden Pointer at top (12 o'clock) -->
+                            <div class="pointer" id="wheel-pointer" aria-hidden="true">
+                                <span></span>
+                            </div>
+
+                            <!-- Glowing Bulbs Ring (24 bulbs) -->
+                            <div class="bulb-ring" aria-hidden="true">
+                                <i style="transform:rotate(0deg) translateY(-50%)"></i><i style="transform:rotate(15deg) translateY(-50%)"></i><i style="transform:rotate(30deg) translateY(-50%)"></i><i style="transform:rotate(45deg) translateY(-50%)"></i><i style="transform:rotate(60deg) translateY(-50%)"></i><i style="transform:rotate(75deg) translateY(-50%)"></i><i style="transform:rotate(90deg) translateY(-50%)"></i><i style="transform:rotate(105deg) translateY(-50%)"></i><i style="transform:rotate(120deg) translateY(-50%)"></i><i style="transform:rotate(135deg) translateY(-50%)"></i><i style="transform:rotate(150deg) translateY(-50%)"></i><i style="transform:rotate(165deg) translateY(-50%)"></i><i style="transform:rotate(180deg) translateY(-50%)"></i><i style="transform:rotate(195deg) translateY(-50%)"></i><i style="transform:rotate(210deg) translateY(-50%)"></i><i style="transform:rotate(225deg) translateY(-50%)"></i><i style="transform:rotate(240deg) translateY(-50%)"></i><i style="transform:rotate(255deg) translateY(-50%)"></i><i style="transform:rotate(270deg) translateY(-50%)"></i><i style="transform:rotate(285deg) translateY(-50%)"></i><i style="transform:rotate(300deg) translateY(-50%)"></i><i style="transform:rotate(315deg) translateY(-50%)"></i><i style="transform:rotate(330deg) translateY(-50%)"></i><i style="transform:rotate(345deg) translateY(-50%)"></i>
+                            </div>
+
+                            <!-- The Spinning Wheel with 12 Prizes -->
+                            <div class="wheel" id="main-wheel" style="background:conic-gradient(from -15deg, #2563eb 0deg 30deg,#f97316 30deg 60deg,#08a96b 60deg 90deg,#ec407a 90deg 120deg,#089ec4 120deg 150deg,#f6c344 150deg 180deg,#a72bd4 180deg 210deg,#e51e36 210deg 240deg,#059669 240deg 270deg,#d97706 270deg 300deg,#4f46e5 300deg 330deg,#db2777 330deg 360deg); transform:rotate(0deg);">
+                                
+    <div class="wheel-label label-0" style="left:50.0000%;top:19.0000%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg>
+            <b>
+                <em>NECKBAND</em><em>WIRELESS</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-1" style="left:65.5000%;top:23.1532%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-music"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+            <b>
+                <em>AIR BUDS</em><em>TWS HD</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-2" style="left:76.8468%;top:34.5000%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+            <b>
+                <em>SPEAKERS</em><em>BT BASS</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-3" style="left:81.0000%;top:50.0000%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            <b>
+                <em>DUFFLE</em><em>BAG</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-4" style="left:76.8468%;top:65.5000%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-backpack"><path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"></path><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path><path d="M8 21v-5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v5"></path><path d="M8 10h8"></path></svg>
+            <b>
+                <em>BAG PACK</em><em>SMART</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-5" style="left:65.5000%;top:76.8468%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-luggage"><path d="M6 20h0a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h0"></path><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"></path><path d="M10 20h4"></path><circle cx="8" cy="20" r="2"></circle><circle cx="16" cy="20" r="2"></circle></svg>
+            <b>
+                <em>TROLLEY</em><em>BAG</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-6" style="left:50.0000%;top:81.0000%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <b>
+                <em>KITCHEN</em><em>BAG</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-7" style="left:34.5000%;top:76.8468%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-utensils"><path d="M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2"></path><path d="M12 2v20"></path><path d="M21 15v7"></path><path d="M18 15h6"></path><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path></svg>
+            <b>
+                <em>7 PCS</em><em>KITCHEN SET</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-8" style="left:23.1532%;top:65.5000%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-archive"><rect width="20" height="5" x="2" y="3" rx="1"></rect><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"></path><path d="M10 12h4"></path></svg>
+            <b>
+                <em>BASKET SET</em><em>3 PCS</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-9" style="left:19.0000%;top:50.0000%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cup-soda"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"></path><path d="M5 8h14"></path><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"></path><path d="m12 8 1-6h2"></path></svg>
+            <b>
+                <em>BOTTLE</em><em>SET</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-10" style="left:23.1532%;top:34.5000%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-battery-charging"><path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"></path><path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"></path><path d="m11 7-3 5h4l-3 5"></path><line x1="22" x2="22" y1="11" y2="13"></line></svg>
+            <b>
+                <em>POWER BANK</em><em>10,000 MH</em>
+            </b>
+        </span>
+    </div>
+
+    <div class="wheel-label label-11" style="left:34.5000%;top:23.1532%;">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-crown"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg>
+            <b>
+                <em>NECKBAND</em><em>PRO ANC</em>
+            </b>
+        </span>
+    </div>
+                            </div>
+
+                            <!-- Center Spin Button -->
+                            <button id="wheel-spin" class="spin-center" aria-label="Spin the prize wheel">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg>
+                                <span id="spin-btn-text">SPIN</span>
+                            </button>
+                        </div>
+
+                        <!-- Wheel Meta & Sound Toggle -->
+                        <div class="wheel-meta">
+                            <button class="sound-toggle" id="sound-btn" aria-label="Toggle sounds">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-volume-2"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"></path><path d="M16 9a5 5 0 0 1 0 6"></path><path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path></svg>
+                            </button>
+                            <span id="wheel-meta-msg">Tap the center and try your luck</span>
+                        </div>
+
+                        <div class="fair-play">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dices"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"></rect><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"></path><path d="M6 18h.01"></path><path d="M10 14h.01"></path><path d="M15 6h.01"></path><path d="M18 9h.01"></path></svg>
+                            <span><strong>Fair festive spin</strong>All 12 prizes have equal odds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support & CTA -->
+                <div class="hero-support">
+                    <div class="benefits">
+                        <div>
+                            <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-percent"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m15 9-6 6"></path><path d="M9 9h.01"></path><path d="M15 15h.01"></path></svg></span>
+                            <p>Exciting Discounts</p>
+                        </div>
+                        <div>
+                            <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-coins"><circle cx="8" cy="8" r="6"></circle><path d="M18.09 10.37A6 6 0 1 1 10.34 18"></path><path d="M7 6h1v4"></path><path d="m16.71 13.88.7.71-2.82 2.82"></path></svg></span>
+                            <p>Assured Cashback</p>
+                        </div>
+                        <div>
+                            <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg></span>
+                            <p>Free Goodies</p>
+                        </div>
+                        <div>
+                            <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg></span>
+                            <p>Jackpot Prizes</p>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions">
+                        <button class="main-cta trigger-spin-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg> 
+                            Spin now
+                        </button>
+
+                        <div class="countdown-card" aria-label="Limited time offer countdown">
+                            <p>Limited time Navratri offer</p>
+                            <div class="countdown-grid">
+                                <div><strong id="cd-days">02</strong><span>days</span></div>
+                                <div><strong id="cd-hours">14</strong><span>hours</span></div>
+                                <div><strong id="cd-minutes">38</strong><span>minutes</span></div>
+                                <div><strong id="cd-seconds">12</strong><span>seconds</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             OFFERS SECTION (from demo)
+             ========================================================================== -->
+        <section class="offers-section" id="offers">
+            <div class="section-heading">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg> 
+                    Festive favourites
+                </p>
+                <h2>More joy in every spin</h2>
+            </div>
+            <div class="offer-grid">
+                <article class="offer-card rose">
+                    <div class="offer-illustration">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg>
+                    </div>
+                    <div>
+                        <h3>10% OFF</h3>
+                        <p>On all festive products</p>
+                        <button class="trigger-spin-btn">Spin &amp; get <span>›</span></button>
+                    </div>
+                </article>
+
+                <article class="offer-card amber">
+                    <div class="offer-illustration">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-indian-rupee"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="M8 8h8"></path><path d="M8 12h8"></path><path d="m13 17-5-1h1a4 4 0 0 0 0-8"></path></svg>
+                    </div>
+                    <div>
+                        <h3>Flat ₹500 OFF</h3>
+                        <p>On orders above ₹2499</p>
+                        <button class="trigger-spin-btn">Spin &amp; get <span>›</span></button>
+                    </div>
+                </article>
+
+                <article class="offer-card violet">
+                    <div class="offer-illustration">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    </div>
+                    <div>
+                        <h3>Buy 1 Get 1</h3>
+                        <p>On selected festive accessories</p>
+                        <button class="trigger-spin-btn">Spin &amp; get <span>›</span></button>
+                    </div>
+                </article>
+
+                <article class="offer-card mint">
+                    <div class="offer-illustration">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-percent"><line x1="19" x2="5" y1="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
+                    </div>
+                    <div>
+                        <h3>Free Gift</h3>
+                        <p>On every eligible spin</p>
+                        <button class="trigger-spin-btn">Spin &amp; get <span>›</span></button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             HOW IT WORKS SECTION (from demo)
+             ========================================================================== -->
+        <section class="how-section" id="how-it-works">
+            <div class="section-heading ornamental">
+                <span></span>
+                <div>
+                    <p>Three simple steps</p>
+                    <h2>How It <em>Works</em></h2>
+                    <small>Get your festive offers in 3 simple steps</small>
+                </div>
+                <span></span>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-plus"><path d="M2 21a8 8 0 0 1 13.292-6"></path><circle cx="10" cy="8" r="5"></circle><path d="M19 16v6"></path><path d="M22 19h-6"></path></svg>
+                        <b>1</b>
+                    </div>
+                    <div>
+                        <h3>Sign Up</h3>
+                        <p>Enter your phone number or visit Poojra Silvassa.</p>
+                    </div>
+                    <span class="step-connector">›</span>
+                </div>
+
+                <div class="step">
+                    <div class="step-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mouse-pointer-click"><path d="M14 4.1 12 6"></path><path d="m5.1 8-2.9-.8"></path><path d="m6 12-1.9 2"></path><path d="M7.2 2.2 8 5.1"></path><path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"></path></svg>
+                        <b>2</b>
+                    </div>
+                    <div>
+                        <h3>Spin the Wheel</h3>
+                        <p>Try your luck and unlock festive offers &amp; gadgets.</p>
+                    </div>
+                    <span class="step-connector">›</span>
+                </div>
+
+                <div class="step">
+                    <div class="step-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg>
+                        <b>3</b>
+                    </div>
+                    <div>
+                        <h3>Claim Your Offer</h3>
+                        <p>Show your coupon code &amp; collect your gift at the store.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             TRUST SECTION (from demo)
+             ========================================================================== -->
+        <section class="trust-section" id="prizes">
+            <div class="trust-inner">
+                <div class="trust-title">
+                    <p>Trusted by Thousands</p>
+                    <h2>This Navratri</h2>
+                    <span>Real people. Real savings. Real happiness.</span>
+                </div>
+                <div class="stats-grid">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        <p><strong>5L+</strong><span>Happy Customers</span></p>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                        <p><strong>4.8/5</strong><span>Average Rating</span></p>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                        <p><strong>100%</strong><span>Secure &amp; Safe</span></p>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                        <p><strong>50+</strong><span>Top Brands</span></p>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <button id="prev-test-btn" aria-label="Previous testimonial">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"></path></svg>
+                    </button>
+                    <div>
+                        <div class="avatar" id="test-avatar">PS</div>
+                        <div>
+                            <blockquote id="test-quote">“Amazing offers! I got a 50% discount on my festive shopping. Loved the experience!”</blockquote>
+                            <div class="rating">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                            </div>
+                            <p><strong id="test-name">Priya Sharma</strong><span>Verified customer</span></p>
+                        </div>
+                    </div>
+                    <button id="next-test-btn" aria-label="Next testimonial">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             FAQ SECTION (from demo)
+             ========================================================================== -->
+        <section class="faq-section" id="faq">
+            <div class="section-heading">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg> 
+                    Good to know
+                </p>
+                <h2>Your questions, answered</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item open">
+                    <button aria-expanded="true">
+                        <span>How does the Spin the Wheel offer work?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><path d="M5 12h14"></path></svg>
+                    </button>
+                    <div>
+                        <p>Tap the SPIN button and the wheel will select one of twelve rewards with fair random odds. Your result is tied directly to where the wheel stops, unlocking guaranteed prizes like Neckbands, Air Buds, Trolley Bags and Kitchen Sets!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button aria-expanded="false">
+                        <span>Can I spin more than once?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                    </button>
+                    <div>
+                        <p>Yes! Every customer receives free lucky spins to unlock festive rewards during the celebration event.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button aria-expanded="false">
+                        <span>How do I claim my prize at Poojra Silvassa?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                    </button>
+                    <div>
+                        <p>Once you win, click the "Claim on WhatsApp" button or copy your coupon code. Show it at our Poojra Silvassa store counter to receive your gift instantly!</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button aria-expanded="false">
+                        <span>Can I combine this offer with another coupon?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                    </button>
+                    <div>
+                        <p>Selected festive vouchers can be combined with store walk-in discounts. Our store team will assist you with the best available saving at checkout.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button aria-expanded="false">
+                        <span>How long is my coupon valid?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                    </button>
+                    <div>
+                        <p>All winning coupons are valid for 7 days from the time of spin. We recommend sharing it to your WhatsApp right away so you don't lose it.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button aria-expanded="false">
+                        <span>Is there any purchase required to spin?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
+                    </button>
+                    <div>
+                        <p>No purchase is required to spin the wheel. It is a 100% free festive celebration initiative by Poojra Silvassa.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             FOOTER (from demo)
+             ========================================================================== -->
+        <footer id="contact">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <a class="brand" href="#home">
+                        <img src="assets/images/logo.png" alt="Poojra Logo" class="brand-logo-img">
+                        <span>
+                            <strong>POOJRA<span></span></strong>
+                            <small>Celebrate more together</small>
+                        </span>
+                    </a>
+                    <p>Spin, shop and celebrate every joyful moment together with Poojra Silvassa.</p>
+                </div>
+
+                <nav aria-label="Footer navigation">
+                    <a href="#home">Home</a>
+                    <a href="#offers">Offers</a>
+                    <a href="#spin-wheel">Prizes</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+
+                <div class="footer-contact">
+                    <a href="mailto:support@poojra.com">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                        support@poojra.com
+                    </a>
+                    <a href="tel:+919876543210">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        +91 98765 43210
+                    </a>
+                    <div class="socials">
+                        <a href="#contact" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
+                        <a href="#contact" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                        <a href="#contact" aria-label="WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2026 Poojra Silvassa. Made for brighter celebrations. All Rights Reserved.
+            </div>
+        </footer>
+    </main>
+
+    <!-- ==========================================================================
+         WINNER MODAL
+         ========================================================================== -->
+    <div class="modal-backdrop" id="winner-modal-backdrop" role="dialog" aria-modal="true">
+        <div class="winner-modal">
+            <button class="modal-close" id="modal-close-btn" aria-label="Close modal">✕</button>
+            
+            <!-- VIEW 1: WIN CELEBRATION & REGISTRATION FORM -->
+            <div id="modal-form-view">
+                <div class="winner-icon-wrap">
+                    <div class="winner-icon" id="modal-icon">🎁</div>
+                </div>
+                <p class="eyebrow">🎉 CONGRATULATIONS!</p>
+                <h2 class="win-headline">You Won</h2>
+                <strong class="prize-won" id="modal-prize-name">Wireless Neckband</strong>
+                
+                <!-- Coupon Box -->
+                <div class="coupon">
+                    <div>
+                        <span class="coupon-label">COUPON CODE</span>
+                        <strong id="modal-coupon-code">VP-NAV-8429</strong>
+                    </div>
+                    <button type="button" id="copy-code-btn">Copy code</button>
+                </div>
+
+                <!-- Registration Form -->
+                <div class="claim-form-header">
+                    <h3>📝 Claim Your Festive Gift</h3>
+                    <p>Enter your details to register &amp; send to Google Sheet</p>
+                </div>
+
+                <form id="claim-gift-form" class="claim-gift-form" novalidate>
+                    <!-- Field 1: Customer Name -->
+                    <div class="form-group">
+                        <label for="cust-name">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Full Name <span class="req">*</span>
+                        </label>
+                        <input type="text" id="cust-name" name="name" placeholder="Enter your full name (દા.ત. Rahul Patel)" required autocomplete="name" />
+                        <span class="field-error" id="name-error"></span>
+                    </div>
+
+                    <!-- Field 2: Contact Number -->
+                    <div class="form-group">
+                        <label for="cust-phone">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            Contact Number <span class="req">*</span>
+                        </label>
+                        <input type="tel" id="cust-phone" name="phone" placeholder="Enter 10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required autocomplete="tel" />
+                        <span class="field-error" id="phone-error"></span>
+                    </div>
+
+                    <!-- Field 3: Konsa Mobile Liya Hai -->
+                    <div class="form-group">
+                        <label for="cust-mobile">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>
+                            Konsa Mobile Liya Hai? (Phone Model) <span class="req">*</span>
+                        </label>
+                        <input type="text" id="cust-mobile" name="mobile_model" placeholder="e.g., iPhone 15, Vivo V30, Samsung A55, Realme..." required />
+                        <span class="field-error" id="mobile-error"></span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="claim-submit-btn" class="submit-claim-btn">
+                        <span class="btn-text">🎁 Submit Now</span>
+                        <span class="btn-loader" style="display:none;">⏳ Submitting to Sheet...</span>
+                    </button>
+                    
+                    <p class="form-footer-note">🔒 Data is instantly recorded to Google Sheet &amp; Poojra Records</p>
+                </form>
+            </div>
+
+            <!-- VIEW 2: SUCCESS & WHATSAPP CLAIM (Shown after Submit Now) -->
+            <div id="modal-success-view" style="display: none;">
+                <div class="success-icon-wrap">
+                    <span class="success-badge-icon">✅</span>
+                </div>
+                <p class="eyebrow success-eyebrow">SAVED TO GOOGLE SHEET</p>
+                <h2 class="success-title">Claim Registered!</h2>
+                
+                <div class="success-summary-card">
+                    <div class="summary-row">
+                        <span>Customer Name:</span> <strong id="success-cust-name">-</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Contact Number:</span> <strong id="success-cust-phone">-</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Purchased Phone:</span> <strong id="success-cust-mobile">-</strong>
+                    </div>
+                    <div class="summary-row highlight">
+                        <span>Prize Won:</span> <strong id="success-prize-name">-</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Coupon Code:</span> <code id="success-coupon-code">-</code>
+                    </div>
+                </div>
+
+                <p class="success-instructions">Send this claim ticket directly to Poojra Silvassa on WhatsApp to pick up your gift from the store:</p>
+
+                <a href="#" target="_blank" class="whatsapp-claim-btn" id="modal-whatsapp-link">
+                    <span>💬</span> Send Ticket on WhatsApp Now
+                </a>
+
+                <button type="button" class="spin-again-btn" id="spin-again-btn">
+                    🔄 Close &amp; Spin Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas Confetti Element (Fixed positioning, zero document flow space) -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- JS Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/confetti.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prizes = [{"id":"neckband","name":"Neckband","tag":"Wireless Hi-Bass","specs":"Deep Bass • 30h Playtime • Magnetic Earbuds","lines":["NECKBAND","WIRELESS"],"color":"#2563eb","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-headphones\"><path d=\"M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3\"></path></svg>"},{"id":"airbuds","name":"Air Buds","tag":"TWS Bluetooth 5.3","specs":"Active Noise Cancellation • Touch Control Pod","lines":["AIR BUDS","TWS HD"],"color":"#f97316","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-music\"><path d=\"M9 18V5l12-2v13\"></path><circle cx=\"6\" cy=\"18\" r=\"3\"></circle><circle cx=\"18\" cy=\"16\" r=\"3\"></circle></svg>"},{"id":"speakers","name":"Speakers","tag":"Bluetooth Party Bass","specs":"360° Surround Sound • Splash Proof • RGB LED","lines":["SPEAKERS","BT BASS"],"color":"#08a96b","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-volume-2\"><polygon points=\"11 5 6 9 2 9 2 15 6 15 11 19 11 5\"></polygon><path d=\"M15.54 8.46a5 5 0 0 1 0 7.07\"></path><path d=\"M19.07 4.93a10 10 0 0 1 0 14.14\"></path></svg>"},{"id":"dufflebag","name":"Duffle Bag","tag":"Travel & Gym","specs":"Water Resistant • Shoe Compartment • Shoulder Strap","lines":["DUFFLE","BAG"],"color":"#ec407a","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-briefcase\"><rect width=\"20\" height=\"14\" x=\"2\" y=\"7\" rx=\"2\" ry=\"2\"></rect><path d=\"M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\"></path></svg>"},{"id":"bagpack","name":"Bag Pack","tag":"Smart Laptop Backpack","specs":"Padded Laptop Sleeve • USB Charging Port • Anti-Theft","lines":["BAG PACK","SMART"],"color":"#089ec4","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-backpack\"><path d=\"M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z\"></path><path d=\"M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2\"></path><path d=\"M8 21v-5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v5\"></path><path d=\"M8 10h8\"></path></svg>"},{"id":"trolley","name":"Trolley Bag","tag":"Hard-Shell Cabin Luggage","specs":"360° Spinner Wheels • TSA Lock • Telescopic Handle","lines":["TROLLEY","BAG"],"color":"#f6c344","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-luggage\"><path d=\"M6 20h0a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h0\"></path><path d=\"M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14\"></path><path d=\"M10 20h4\"></path><circle cx=\"8\" cy=\"20\" r=\"2\"></circle><circle cx=\"16\" cy=\"20\" r=\"2\"></circle></svg>"},{"id":"kitchenbag","name":"Kitchen Bag","tag":"Insulated Carry Bag","specs":"Thermal Foil Layer • 6H Heat Retention • Leak Proof","lines":["KITCHEN","BAG"],"color":"#a72bd4","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-shopping-bag\"><path d=\"M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z\"></path><path d=\"M3 6h18\"></path><path d=\"M16 10a4 4 0 0 1-8 0\"></path></svg>"},{"id":"kitchenset","name":"7 pcs Kitchen Set","tag":"Non-Stick Cookware","specs":"Tawa, Kadhai, Fry Pan, Glass Lid & Spatulas Included","lines":["7 PCS","KITCHEN SET"],"color":"#e51e36","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-utensils\"><path d=\"M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2\"></path><path d=\"M12 2v20\"></path><path d=\"M21 15v7\"></path><path d=\"M18 15h6\"></path><path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\"></path><path d=\"M7 2v20\"></path></svg>"},{"id":"basketset","name":"Basket set ( 3 pcs )","tag":"Multi-Utility Organizers","specs":"3 Convenient Sizes • Stacking Design • Durable Plastic","lines":["BASKET SET","3 PCS"],"color":"#059669","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-archive\"><rect width=\"20\" height=\"5\" x=\"2\" y=\"3\" rx=\"1\"></rect><path d=\"M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8\"></path><path d=\"M10 12h4\"></path></svg>"},{"id":"bottleset","name":"Bottle Set","tag":"Stainless Steel Vacuum","specs":"Double Wall Insulation • 24H Hot & Cold • BPA Free","lines":["BOTTLE","SET"],"color":"#d97706","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-cup-soda\"><path d=\"m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8\"></path><path d=\"M5 8h14\"></path><path d=\"M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0\"></path><path d=\"m12 8 1-6h2\"></path></svg>"},{"id":"powerbank","name":"Power Bank ( 10,000 MH )","tag":"Fast Charging 22.5W","specs":"Dual USB Output + Type-C • Slim Pocket Size • LED Indicator","lines":["POWER BANK","10,000 MH"],"color":"#4f46e5","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-battery-charging\"><path d=\"M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2\"></path><path d=\"M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1\"></path><path d=\"m11 7-3 5h4l-3 5\"></path><line x1=\"22\" x2=\"22\" y1=\"11\" y2=\"13\"></line></svg>"},{"id":"neckband_pro","name":"Neckband Pro","tag":"ANC Noise Cancelling Edition","specs":"Environmental Noise Cancellation • Dual Pairing • Fast Charge","lines":["NECKBAND","PRO ANC"],"color":"#db2777","svg":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-crown\"><path d=\"M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z\"></path><path d=\"M5 21h14\"></path></svg>"}];
+            const sliceCount = prizes.length; // 12
+            const sliceAngle = 360 / sliceCount; // 30 deg
+
+            const wheelEl = document.getElementById('main-wheel');
+            const spinBtn = document.getElementById('wheel-spin');
+            const pointer = document.getElementById('wheel-pointer');
+            const metaMsg = document.getElementById('wheel-meta-msg');
+            const soundBtn = document.getElementById('sound-btn');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const navLinks = document.getElementById('main-nav-links');
+            // Target Google Sheet: https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit
+            // Target Sheet ID: 1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY
+            // Paste your deployed Web App URL from Apps Script below (see GOOGLE_SHEET_SETUP.md):
+            const GOOGLE_SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+            const modalBackdrop = document.getElementById('winner-modal-backdrop');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const modalFormView = document.getElementById('modal-form-view');
+            const modalSuccessView = document.getElementById('modal-success-view');
+            const modalIcon = document.getElementById('modal-icon');
+            const modalPrizeName = document.getElementById('modal-prize-name');
+            const modalCouponCode = document.getElementById('modal-coupon-code');
+            const copyCodeBtn = document.getElementById('copy-code-btn');
+            const whatsappLink = document.getElementById('modal-whatsapp-link');
+
+            // Form Elements
+            const claimForm = document.getElementById('claim-gift-form');
+            const custNameInput = document.getElementById('cust-name');
+            const custPhoneInput = document.getElementById('cust-phone');
+            const custMobileInput = document.getElementById('cust-mobile');
+            const claimSubmitBtn = document.getElementById('claim-submit-btn');
+            const nameError = document.getElementById('name-error');
+            const phoneError = document.getElementById('phone-error');
+            const mobileError = document.getElementById('mobile-error');
+
+            // Success View Elements
+            const successCustName = document.getElementById('success-cust-name');
+            const successCustPhone = document.getElementById('success-cust-phone');
+            const successCustMobile = document.getElementById('success-cust-mobile');
+            const successPrizeName = document.getElementById('success-prize-name');
+            const successCouponCode = document.getElementById('success-coupon-code');
+            const spinAgainBtn = document.getElementById('spin-again-btn');
+
+            let currentRotation = 0;
+            let isSpinning = false;
+            let lastPeg = -1;
+            let lastWonPrize = null;
+            let currentCoupon = '';
+
+            // Spin handler
+            function spin() {
+                if (isSpinning) return;
+                isSpinning = true;
+                spinBtn.disabled = true;
+                metaMsg.textContent = "Your festive reward is on its way…";
+
+                if (window.soundFX) window.soundFX.initOnFirstInteraction();
+
+                // Select winning prize (fair odds)
+                const selectedIndex = Math.floor(Math.random() * sliceCount);
+                const wonPrize = prizes[selectedIndex];
+                lastWonPrize = wonPrize;
+
+                const fullSpins = 6 + Math.floor(Math.random() * 3);
+                const targetMod = (-(selectedIndex * sliceAngle) % 360 + 360) % 360;
+                const currentMod = (currentRotation % 360 + 360) % 360;
+                let delta = (targetMod - currentMod + 360) % 360;
+                if (delta < 180) delta += 360;
+
+                const targetRotation = currentRotation + (fullSpins * 360) + delta;
+                const duration = 5800; // 5.8s
+
+                wheelEl.style.transition = `transform ${duration}ms cubic-bezier(0.12, 0.8, 0.18, 1)`;
+                wheelEl.style.transform = `rotate(${targetRotation}deg)`;
+
+                const startTime = performance.now();
+                function checkTicks(now) {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const ease = 1 - Math.pow(1 - progress, 3);
+                    const angleNow = currentRotation + (targetRotation - currentRotation) * ease;
+                    const peg = Math.floor((angleNow + sliceAngle / 2) / sliceAngle);
+
+                    if (peg !== lastPeg) {
+                        lastPeg = peg;
+                        if (window.soundFX) window.soundFX.playTick();
+                        if (pointer) {
+                            pointer.classList.remove('tick-jiggle');
+                            void pointer.offsetWidth;
+                            pointer.classList.add('tick-jiggle');
+                        }
+                    }
+
+                    if (progress < 1) {
+                        requestAnimationFrame(checkTicks);
+                    }
+                }
+                requestAnimationFrame(checkTicks);
+
+                setTimeout(() => {
+                    currentRotation = targetRotation;
+                    isSpinning = false;
+                    spinBtn.disabled = false;
+                    metaMsg.textContent = `Last win: ${wonPrize.name}`;
+
+                    if (window.soundFX) window.soundFX.playWinFanfare();
+                    if (window.confettiCannon) window.confettiCannon.fire(5500);
+
+                    currentCoupon = 'VP-NAV-' + Math.floor(1000 + Math.random() * 9000);
+                    modalIcon.innerHTML = wonPrize.svg;
+                    modalPrizeName.textContent = wonPrize.name;
+                    modalCouponCode.textContent = currentCoupon;
+
+                    // Reset Form State & Errors
+                    nameError.textContent = '';
+                    phoneError.textContent = '';
+                    mobileError.textContent = '';
+                    if (modalFormView) modalFormView.style.display = 'block';
+                    if (modalSuccessView) modalSuccessView.style.display = 'none';
+
+                    modalBackdrop.classList.add('open');
+                }, duration);
+            }
+
+            spinBtn.addEventListener('click', spin);
+
+            document.querySelectorAll('.trigger-spin-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const wheelSec = document.getElementById('spin-wheel');
+                    if (wheelSec) wheelSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    setTimeout(spin, 400);
+                });
+            });
+
+            function closeModal() {
+                modalBackdrop.classList.remove('open');
+            }
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', (e) => {
+                if (e.target === modalBackdrop) closeModal();
+            });
+
+            if (spinAgainBtn) {
+                spinAgainBtn.addEventListener('click', () => {
+                    closeModal();
+                    setTimeout(spin, 500);
+                });
+            }
+
+            copyCodeBtn.addEventListener('click', () => {
+                const code = modalCouponCode.textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    copyCodeBtn.textContent = 'Copied! ✓';
+                    setTimeout(() => copyCodeBtn.textContent = 'Copy code', 2000);
+                });
+            });
+
+            // Form Submit & Google Sheet Integration
+            claimForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                nameError.textContent = '';
+                phoneError.textContent = '';
+                mobileError.textContent = '';
+
+                const custName = custNameInput.value.trim();
+                const custPhone = custPhoneInput.value.trim();
+                const custMobile = custMobileInput.value.trim();
+
+                // Validation
+                let hasError = false;
+                if (!custName || custName.length < 2) {
+                    nameError.textContent = 'Please enter your full name (ઓછામાં ઓછા 2 અક્ષર).';
+                    custNameInput.focus();
+                    hasError = true;
+                } else if (!custPhone || !/^\d{10}$/.test(custPhone)) {
+                    phoneError.textContent = 'Please enter a valid 10-digit mobile number.';
+                    custPhoneInput.focus();
+                    hasError = true;
+                } else if (!custMobile || custMobile.length < 2) {
+                    mobileError.textContent = 'Please specify which mobile phone you purchased.';
+                    custMobileInput.focus();
+                    hasError = true;
+                }
+
+                if (hasError) return;
+
+                // Loading State on Submit Button
+                claimSubmitBtn.disabled = true;
+                const btnText = claimSubmitBtn.querySelector('.btn-text');
+                const btnLoader = claimSubmitBtn.querySelector('.btn-loader');
+                if (btnText) btnText.style.display = 'none';
+                if (btnLoader) btnLoader.style.display = 'inline';
+
+                const prizeWonName = lastWonPrize ? lastWonPrize.name : (modalPrizeName.textContent || 'Festive Prize');
+                const timeStr = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+                const leadPayload = {
+                    timestamp: timeStr,
+                    name: custName,
+                    phone: custPhone,
+                    mobile_model: custMobile,
+                    prize: prizeWonName,
+                    coupon: currentCoupon,
+                    store: 'Poojra Silvassa'
+                };
+
+                // 1. Save to LocalStorage Backup (Guarantees zero data loss)
+                try {
+                    const localLeads = JSON.parse(localStorage.getItem('poojra_sheet_leads') || '[]');
+                    localLeads.unshift(leadPayload);
+                    localStorage.setItem('poojra_sheet_leads', JSON.stringify(localLeads));
+                } catch(err) {
+                    console.error('LocalStorage lead save error:', err);
+                }
+
+                // 2. Send to Google Sheets Web App
+                const sheetUrl = (typeof GOOGLE_SHEET_URL !== 'undefined' && GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes('YOUR_GOOGLE'))
+                    ? GOOGLE_SHEET_URL
+                    : (localStorage.getItem('poojra_sheet_url') || '');
+
+                if (sheetUrl) {
+                    try {
+                        await fetch(sheetUrl, {
+                            method: 'POST',
+                            mode: 'no-cors', // standard for Google Apps Script Web App
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: new URLSearchParams(leadPayload)
+                        });
+                        console.log('Lead successfully dispatched to Google Sheet:', leadPayload);
+                    } catch (netErr) {
+                        console.warn('Google Sheet network dispatch warning:', netErr);
+                    }
+                } else {
+                    console.info('Google Sheet URL not configured yet. Lead securely saved in browser LocalStorage. View setup instructions in GOOGLE_SHEET_SETUP.md');
+                }
+
+                // 3. Populate Success Card View
+                successCustName.textContent = custName;
+                successCustPhone.textContent = custPhone;
+                successCustMobile.textContent = custMobile;
+                successPrizeName.textContent = prizeWonName;
+                successCouponCode.textContent = currentCoupon;
+
+                // 4. Configure WhatsApp Ticket Link with Complete Customer & Phone Details
+                const waMessage = encodeURIComponent(
+                    `🎉 *Poojra Silvassa Festive Reward Claim* 🎉\n` +
+                    `━━━━━━━━━━━━━━━━━━━━\n` +
+                    `👤 *Customer Name:* ${custName}\n` +
+                    `📱 *Contact Number:* ${custPhone}\n` +
+                    `📱 *Purchased Phone:* ${custMobile}\n` +
+                    `🎁 *Prize Won:* ${prizeWonName}\n` +
+                    `🎟️ *Coupon Code:* ${currentCoupon}\n` +
+                    `📍 *Store:* Poojra Silvassa\n` +
+                    `━━━━━━━━━━━━━━━━━━━━\n` +
+                    `Hello Poojra Team, please confirm my festive gift pickup!`
+                );
+                whatsappLink.href = `https://wa.me/919876543210?text=${waMessage}`;
+
+                // 5. Switch to Success View
+                setTimeout(() => {
+                    claimSubmitBtn.disabled = false;
+                    if (btnText) btnText.style.display = 'inline';
+                    if (btnLoader) btnLoader.style.display = 'none';
+
+                    modalFormView.style.display = 'none';
+                    modalSuccessView.style.display = 'block';
+
+                    if (window.soundFX) window.soundFX.playWinFanfare();
+                    if (window.confettiCannon) window.confettiCannon.fire(4000);
+                }, 400);
+            });
+
+            // Admin utilities in console
+            window.setGoogleSheetUrl = (url) => {
+                localStorage.setItem('poojra_sheet_url', url);
+                alert('Google Sheet Web App URL saved successfully: ' + url);
+            };
+            window.viewRecordedLeads = () => {
+                const leads = JSON.parse(localStorage.getItem('poojra_sheet_leads') || '[]');
+                console.table(leads);
+                return leads;
+            };
+
+            soundBtn.addEventListener('click', () => {
+                if (window.soundFX) {
+                    const on = window.soundFX.toggle();
+                    soundBtn.style.opacity = on ? '1' : '0.4';
+                }
+            });
+
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    const open = navLinks.classList.toggle('open');
+                    mobileMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                });
+                navLinks.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => navLinks.classList.remove('open'));
+                });
+            }
+
+            // Countdown Timer
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 3);
+            targetDate.setHours(23, 59, 59, 0);
+
+            function updateTimer() {
+                const now = Date.now();
+                const diff = targetDate.getTime() - now;
+                if (diff > 0) {
+                    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const s = Math.floor((diff % (1000 * 60)) / 1000);
+                    document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+                    document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+                    document.getElementById('cd-minutes').textContent = String(m).padStart(2, '0');
+                    document.getElementById('cd-seconds').textContent = String(s).padStart(2, '0');
+                }
+            }
+            setInterval(updateTimer, 1000);
+            updateTimer();
+
+            // FAQ Accordion
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const btn = item.querySelector('button');
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        const isOpen = item.classList.contains('open');
+                        document.querySelectorAll('.faq-item').forEach(i => {
+                            i.classList.remove('open');
+                            const b = i.querySelector('button');
+                            if (b) b.setAttribute('aria-expanded', 'false');
+                            const sv = b ? b.querySelector('svg') : null;
+                            if (sv) sv.innerHTML = '<path d="M5 12h14"></path><path d="M12 5v14"></path>';
+                        });
+                        if (!isOpen) {
+                            item.classList.add('open');
+                            btn.setAttribute('aria-expanded', 'true');
+                            const sv = btn.querySelector('svg');
+                            if (sv) sv.innerHTML = '<path d="M5 12h14"></path>';
+                        }
+                    });
+                }
+            });
+
+            // Testimonials
+            const testimonials = [
+                {
+                    quote: "Amazing offers! I got a 50% discount on my festive shopping. Loved the experience!",
+                    name: "Priya Sharma",
+                    initials: "PS"
+                },
+                {
+                    quote: "The wheel felt so much fun, and my free-gift coupon worked instantly at checkout.",
+                    name: "Meera Patel",
+                    initials: "MP"
+                },
+                {
+                    quote: "A lovely festive surprise — I won cashback and found everything I needed for Garba night.",
+                    name: "Aarav Shah",
+                    initials: "AS"
+                }
+            ];
+            let tIdx = 0;
+            const quoteEl = document.getElementById('test-quote');
+            const nameEl = document.getElementById('test-name');
+            const avatarEl = document.getElementById('test-avatar');
+            const prevBtn = document.getElementById('prev-test-btn');
+            const nextBtn = document.getElementById('next-test-btn');
+
+            function renderTestimonial() {
+                const t = testimonials[tIdx];
+                if (quoteEl) quoteEl.textContent = `“${t.quote}”`;
+                if (nameEl) nameEl.textContent = t.name;
+                if (avatarEl) avatarEl.textContent = t.initials;
+            }
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    tIdx = (tIdx - 1 + testimonials.length) % testimonials.length;
+                    renderTestimonial();
+                });
+            }
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    tIdx = (tIdx + 1) % testimonials.length;
+                    renderTestimonial();
+                });
+            }
+            setInterval(() => {
+                tIdx = (tIdx + 1) % testimonials.length;
+                renderTestimonial();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
