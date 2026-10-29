@@ -353,6 +353,17 @@
             min-height: 12px;
             display: block;
         }
+        .form-general-error {
+            background: rgba(239, 68, 68, 0.18);
+            border: 1px solid rgba(248, 113, 113, 0.45);
+            color: #FECDD3;
+            padding: 9px 13px;
+            border-radius: 9px;
+            font-size: 0.82rem;
+            margin-bottom: 10px;
+            text-align: left;
+            line-height: 1.4;
+        }
 
         /* Submit Button */
         .submit-claim-btn {
@@ -1075,35 +1086,38 @@
                 </div>
 
                 <form id="claim-gift-form" class="claim-gift-form" novalidate>
-                    <!-- Field 1: Customer Name -->
+                    <!-- Field 1: Full Name -->
                     <div class="form-group">
                         <label for="cust-name">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            Customer Name <span class="req">*</span>
+                            Full Name <span class="req">*</span>
                         </label>
-                        <input type="text" id="cust-name" name="name" placeholder="Enter your full name (દા.ત. Rahul Patel)" required autocomplete="name" />
+                        <input type="text" id="cust-name" name="name" placeholder="Enter full name (e.g. Himanshu)" required autocomplete="name" />
                         <span class="field-error" id="name-error"></span>
                     </div>
 
-                    <!-- Field 2: Contact Number -->
+                    <!-- Field 2: Mobile Number -->
                     <div class="form-group">
                         <label for="cust-phone">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                             Mobile Number <span class="req">*</span>
                         </label>
-                        <input type="tel" id="cust-phone" name="phone" placeholder="Enter 10-digit mobile number" pattern="[0-9]{10}" maxlength="10" required autocomplete="tel" />
+                        <input type="tel" id="cust-phone" name="phone" placeholder="10-digit mobile number (e.g. 9328603748)" pattern="[0-9]{10}" maxlength="10" required autocomplete="tel" />
                         <span class="field-error" id="phone-error"></span>
                     </div>
 
-                    <!-- Field 3: Brand Name of the Phone -->
+                    <!-- Field 3: Brand Name -->
                     <div class="form-group">
                         <label for="cust-mobile">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>
-                            Brand Name of the Phone (Konsa Mobile Liya) <span class="req">*</span>
+                            Brand Name <span class="req">*</span>
                         </label>
-                        <input type="text" id="cust-mobile" name="mobile_model" placeholder="e.g., iPhone 15 / Vivo V30 / Samsung A55 / OnePlus / Realme..." required />
+                        <input type="text" id="cust-mobile" name="mobile_model" placeholder="e.g. IPHONE / Samsung / Vivo / OnePlus / Realme..." required />
                         <span class="field-error" id="mobile-error"></span>
                     </div>
+
+                    <!-- General Submission Error Message Container -->
+                    <div id="submit-general-error" class="form-general-error" style="display:none;"></div>
 
                     <!-- Submit Button -->
                     <button type="submit" id="claim-submit-btn" class="submit-claim-btn">
@@ -1129,13 +1143,13 @@
                 
                 <div class="success-summary-card">
                     <div class="summary-row">
-                        <span>Customer Name:</span> <strong id="success-cust-name">-</strong>
+                        <span>Full Name:</span> <strong id="success-cust-name">-</strong>
                     </div>
                     <div class="summary-row">
-                        <span>Contact Number:</span> <strong id="success-cust-phone">-</strong>
+                        <span>Mobile Number:</span> <strong id="success-cust-phone">-</strong>
                     </div>
                     <div class="summary-row">
-                        <span>Purchased Phone:</span> <strong id="success-cust-mobile">-</strong>
+                        <span>Brand Name:</span> <strong id="success-cust-mobile">-</strong>
                     </div>
                     <div class="summary-row highlight">
                         <span>Prize Won:</span> <strong id="success-prize-name">-</strong>
@@ -1177,8 +1191,8 @@
             const soundBtn = document.getElementById('sound-btn');
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const navLinks = document.getElementById('main-nav-links');
-            // Target Google Sheet: https://docs.google.com/spreadsheets/d/1EX0eqM7-8atPIc57zaOmJOoG0V6zPe7Ovl04laMRH1M/edit
-            // Target Sheet ID: 1EX0eqM7-8atPIc57zaOmJOoG0V6zPe7Ovl04laMRH1M
+            // Target Google Sheet: https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit
+            // Target Sheet ID: 1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY
             // Paste your deployed Web App URL from Apps Script below:
             const GOOGLE_SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
 
@@ -1201,6 +1215,7 @@
             const nameError = document.getElementById('name-error');
             const phoneError = document.getElementById('phone-error');
             const mobileError = document.getElementById('mobile-error');
+            const submitGeneralError = document.getElementById('submit-general-error');
 
             // Success View Elements
             const successCustName = document.getElementById('success-cust-name');
@@ -1284,6 +1299,10 @@
                     nameError.textContent = '';
                     phoneError.textContent = '';
                     mobileError.textContent = '';
+                    if (submitGeneralError) {
+                        submitGeneralError.textContent = '';
+                        submitGeneralError.style.display = 'none';
+                    }
                     if (modalFormView) modalFormView.style.display = 'block';
                     if (modalSuccessView) modalSuccessView.style.display = 'none';
 
@@ -1331,28 +1350,66 @@
                 nameError.textContent = '';
                 phoneError.textContent = '';
                 mobileError.textContent = '';
+                if (submitGeneralError) {
+                    submitGeneralError.textContent = '';
+                    submitGeneralError.style.display = 'none';
+                }
 
                 const custName = custNameInput.value.trim();
                 const custPhone = custPhoneInput.value.trim();
                 const custMobile = custMobileInput.value.trim();
 
-                // Validation
+                // Validation Rule 1: Full Name
                 let hasError = false;
                 if (!custName || custName.length < 2) {
-                    nameError.textContent = 'Please enter your full name (ઓછામાં ઓછા 2 અક્ષર).';
+                    nameError.textContent = 'Please enter your full name (minimum 2 characters).';
                     custNameInput.focus();
                     hasError = true;
-                } else if (!custPhone || !/^\d{10}$/.test(custPhone)) {
-                    phoneError.textContent = 'Please enter a valid 10-digit mobile number.';
+                }
+
+                // Validation Rule 2: Mobile Number (Strict Indian 10-digit)
+                let cleanPhone = custPhone.replace(/[^0-9]/g, '');
+                if (cleanPhone.length === 12 && cleanPhone.startsWith('91')) {
+                    cleanPhone = cleanPhone.substring(2);
+                }
+                if (!hasError && (cleanPhone.length !== 10 || !/^[6-9]\d{9}$/.test(cleanPhone))) {
+                    phoneError.textContent = 'Please enter a valid 10-digit Indian mobile number (e.g. 9328603748).';
                     custPhoneInput.focus();
                     hasError = true;
-                } else if (!custMobile || custMobile.length < 2) {
-                    mobileError.textContent = 'Please specify which mobile phone you purchased.';
+                }
+
+                // Validation Rule 3: Brand Name
+                if (!hasError && (!custMobile || custMobile.length < 2)) {
+                    mobileError.textContent = 'Please specify the brand name of your purchased mobile (e.g. IPHONE).';
                     custMobileInput.focus();
                     hasError = true;
                 }
 
                 if (hasError) return;
+
+                // Retrieve configured Google Apps Script Web App URL
+                let sheetUrl = (typeof GOOGLE_SHEET_URL !== 'undefined' && GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes('YOUR_GOOGLE'))
+                    ? GOOGLE_SHEET_URL
+                    : (localStorage.getItem('poojra_sheet_url') || '');
+
+                if (!sheetUrl) {
+                    const entered = prompt(
+                        '⚡ Connect Google Sheet (1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY):\n\n' +
+                        'Please paste your deployed Google Apps Script Web App (/exec) URL:'
+                    );
+                    if (entered && entered.trim().startsWith('http')) {
+                        sheetUrl = entered.trim();
+                        localStorage.setItem('poojra_sheet_url', sheetUrl);
+                    }
+                }
+
+                if (!sheetUrl) {
+                    if (submitGeneralError) {
+                        submitGeneralError.textContent = '⚠️ Google Sheet Web App URL is required to save your submission. Please deploy the script and paste your Web App URL using the "Setup / Change Google Sheet Link" below.';
+                        submitGeneralError.style.display = 'block';
+                    }
+                    return;
+                }
 
                 // Loading State on Submit Button
                 claimSubmitBtn.disabled = true;
@@ -1365,93 +1422,94 @@
                 const timeStr = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
                 const leadPayload = {
-                    timestamp: timeStr,
+                    fullName: custName,
                     name: custName,
-                    phone: custPhone,
-                    number: custPhone,
+                    mobileNumber: cleanPhone,
+                    phone: cleanPhone,
+                    brandName: custMobile,
                     brand: custMobile,
                     mobile_model: custMobile,
+                    spinResult: prizeWonName,
                     prize: prizeWonName,
                     coupon: currentCoupon,
-                    store: 'Poojra Silvassa'
+                    submissionId: currentCoupon,
+                    timestamp: timeStr
                 };
 
-                // 1. Save to LocalStorage Backup (Guarantees zero data loss)
+                let isSaved = false;
+                let errorDetails = '';
+
                 try {
-                    const localLeads = JSON.parse(localStorage.getItem('poojra_sheet_leads') || '[]');
-                    localLeads.unshift(leadPayload);
-                    localStorage.setItem('poojra_sheet_leads', JSON.stringify(localLeads));
-                } catch(err) {
-                    console.error('LocalStorage lead save error:', err);
-                }
+                    const response = await fetch(sheetUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams(leadPayload)
+                    });
 
-                // 2. Send to Google Sheets Web App
-                let sheetUrl = (typeof GOOGLE_SHEET_URL !== 'undefined' && GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes('YOUR_GOOGLE'))
-                    ? GOOGLE_SHEET_URL
-                    : (localStorage.getItem('poojra_sheet_url') || '');
-
-                if (!sheetUrl) {
-                    const entered = prompt(
-                        '⚡ Enter your Google Apps Script Web App URL to link this form to Google Sheet:\n(https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit)\n\nTip: You only need to paste this once!'
-                    );
-                    if (entered && entered.trim().startsWith('http')) {
-                        sheetUrl = entered.trim();
-                        localStorage.setItem('poojra_sheet_url', sheetUrl);
-                    }
-                }
-
-                if (sheetUrl) {
+                    let resJson = null;
                     try {
-                        await fetch(sheetUrl, {
-                            method: 'POST',
-                            mode: 'no-cors', // standard for Google Apps Script Web App
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: new URLSearchParams(leadPayload)
-                        });
-                        console.log('Lead successfully dispatched to Google Sheet:', leadPayload);
-                    } catch (netErr) {
-                        console.warn('Google Sheet network dispatch warning:', netErr);
+                        resJson = await response.json();
+                    } catch (parseErr) {
+                        if (response.ok) {
+                            resJson = { status: 'success' };
+                        }
                     }
-                } else {
-                    console.info('Google Sheet URL not configured yet. Lead securely saved in browser LocalStorage. View setup instructions in GOOGLE_SHEET_SETUP.md');
+
+                    if (resJson && resJson.status === 'success') {
+                        isSaved = true;
+                        console.log('✅ Entry verified & saved to Google Sheet:', resJson);
+                    } else {
+                        errorDetails = (resJson && resJson.message) ? resJson.message : 'Google Sheet backend did not acknowledge receipt.';
+                    }
+                } catch (netErr) {
+                    console.error('Google Sheet dispatch error:', netErr);
+                    errorDetails = 'Network or connection error communicating with Google Apps Script Web App. Please ensure your Web App is deployed with "Anyone" access.';
                 }
 
-                // 3. Populate Success Card View
-                successCustName.textContent = custName;
-                successCustPhone.textContent = custPhone;
-                successCustMobile.textContent = custMobile;
-                successPrizeName.textContent = prizeWonName;
-                successCouponCode.textContent = currentCoupon;
+                if (isSaved) {
+                    // Populate Success Card View
+                    successCustName.textContent = custName;
+                    successCustPhone.textContent = cleanPhone;
+                    successCustMobile.textContent = custMobile;
+                    successPrizeName.textContent = prizeWonName;
+                    successCouponCode.textContent = currentCoupon;
 
-                // 4. Configure WhatsApp Ticket Link with Complete Customer & Phone Details
-                const waMessage = encodeURIComponent(
-                    `🎉 *Poojra Silvassa Festive Reward Claim* 🎉\n` +
-                    `━━━━━━━━━━━━━━━━━━━━\n` +
-                    `👤 *Customer Name:* ${custName}\n` +
-                    `📱 *Contact Number:* ${custPhone}\n` +
-                    `📱 *Purchased Phone:* ${custMobile}\n` +
-                    `🎁 *Prize Won:* ${prizeWonName}\n` +
-                    `🎟️ *Coupon Code:* ${currentCoupon}\n` +
-                    `📍 *Store:* Poojra Silvassa\n` +
-                    `━━━━━━━━━━━━━━━━━━━━\n` +
-                    `Hello Poojra Team, please confirm my festive gift pickup!`
-                );
-                whatsappLink.href = `https://wa.me/919876543210?text=${waMessage}`;
+                    // WhatsApp Ticket Link with Complete Customer & Phone Details
+                    const waMessage = encodeURIComponent(
+                        `🎉 *Poojra Silvassa Festive Reward Claim* 🎉\n` +
+                        `━━━━━━━━━━━━━━━━━━━━\n` +
+                        `👤 *Full Name:* ${custName}\n` +
+                        `📱 *Mobile Number:* ${cleanPhone}\n` +
+                        `📱 *Brand Name:* ${custMobile}\n` +
+                        `🎁 *Prize Won:* ${prizeWonName}\n` +
+                        `🎟️ *Coupon Code:* ${currentCoupon}\n` +
+                        `📍 *Store:* Poojra Silvassa\n` +
+                        `━━━━━━━━━━━━━━━━━━━━\n` +
+                        `Hello Poojra Team, please confirm my festive gift pickup!`
+                    );
+                    whatsappLink.href = `https://wa.me/919876543210?text=${waMessage}`;
 
-                // 5. Switch to Success View
-                setTimeout(() => {
-                    claimSubmitBtn.disabled = false;
-                    if (btnText) btnText.style.display = 'inline';
-                    if (btnLoader) btnLoader.style.display = 'none';
-
+                    // Switch to Success View
                     modalFormView.style.display = 'none';
                     modalSuccessView.style.display = 'block';
 
                     if (window.soundFX) window.soundFX.playWinFanfare();
-                    if (window.confettiCannon) window.confettiCannon.fire(4000);
-                }, 400);
+                    if (window.confettiCannon) window.confettiCannon.fire(4500);
+
+                } else {
+                    // Show error, keep entered input values intact so customer can retry without retyping!
+                    if (submitGeneralError) {
+                        submitGeneralError.textContent = '❌ ' + errorDetails;
+                        submitGeneralError.style.display = 'block';
+                    }
+                }
+
+                // Restore Button State
+                claimSubmitBtn.disabled = false;
+                if (btnText) btnText.style.display = 'inline';
+                if (btnLoader) btnLoader.style.display = 'none';
             });
 
             // Google Sheet Settings Link Handler
@@ -1460,10 +1518,17 @@
                 sheetSettingsLink.addEventListener('click', (e) => {
                     e.preventDefault();
                     const currentUrl = localStorage.getItem('poojra_sheet_url') || (GOOGLE_SHEET_URL.includes('YOUR_GOOGLE') ? '' : GOOGLE_SHEET_URL);
-                    const newUrl = prompt('Enter your Google Apps Script Web App URL for Sheet:\nhttps://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit', currentUrl);
+                    const newUrl = prompt(
+                        'Enter your Google Apps Script Web App URL for Sheet:\nhttps://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit',
+                        currentUrl
+                    );
                     if (newUrl !== null && newUrl.trim()) {
                         localStorage.setItem('poojra_sheet_url', newUrl.trim());
-                        alert('✅ Google Sheet Web App URL linked successfully!\n\nAll submitted leads will now be added directly to your spreadsheet.');
+                        if (submitGeneralError) {
+                            submitGeneralError.textContent = '';
+                            submitGeneralError.style.display = 'none';
+                        }
+                        alert('✅ Google Sheet Web App URL linked successfully!\n\nAll submitted leads will now be added directly to spreadsheet 1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY.');
                     }
                 });
             }

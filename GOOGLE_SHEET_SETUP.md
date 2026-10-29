@@ -1,44 +1,94 @@
-# Poojra Silvassa - Google Sheet Setup Guide (Sirf 1 Minute)
+# Poojra Silvassa - Google Sheet Setup & Deployment Guide
 
-Aapka poora Spin & Win lead data (**Customer Name**, **Mobile Number**, **Brand Name**, **Prize Won**, aur **Coupon Code**) seedha aapki is Google Sheet me jayega:
+This guide explains how to connect the **Poojra Silvassa Spinning Wheel Landing Page** to your specific Google Sheet.
 
-🔗 **Aapki Google Sheet Link:**  
-**[https://docs.google.com/spreadsheets/d/1EX0eqM7-8atPIc57zaOmJOoG0V6zPe7Ovl04laMRH1M/edit](https://docs.google.com/spreadsheets/d/1EX0eqM7-8atPIc57zaOmJOoG0V6zPe7Ovl04laMRH1M/edit)**
-
----
-
-### Step 1: Apni Sheet Me Apps Script Kholein
-1. Apni upar di gayi Google Sheet open karein.
-2. Top Menu bar me click karein: **Extensions** > **Apps Script** (jiska icon orange `</>` hota hai).
+- **Spreadsheet ID:** `1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY`
+- **Spreadsheet URL:** [https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit?usp=drivesdk](https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit?usp=drivesdk)
 
 ---
 
-### Step 2: Code Paste Karein
-1. Apps Script editor me jo bhi code dikhe use pura delete kar dein (Ctrl + A dabakar Delete).
-2. Hamare project me di gayi file [`google_apps_script.js`](./google_apps_script.js) ka pura code copy karein aur wahan paste kar dein.
-3. **Ctrl + S** dabakar save karein.
+## 1. Google Sheets Target Columns
+
+The script records each submission in the first worksheet into the following columns:
+1. **Timestamp** (e.g., `29/10/2026 15:30:00`)
+2. **Full Name** (Customer's Name)
+3. **Mobile Number** (10-digit Indian Mobile Number)
+4. **Brand Name** (Purchased Mobile Brand/Model)
+5. **Spin Result** (Reward Won from the Wheel)
+
+*Note: If your sheet already contains columns like `Name`, `Number`, `Brand`, the script automatically detects and preserves them, placing values in the matching columns without deleting or modifying any existing data.*
 
 ---
 
-### Step 3: Web App Deploy Karein (Zaroori Step)
-1. Top-right corner me blue **Deploy** button par click karein > **New deployment**.
-2. Left side me **Gear icon (Select type)** par click karein aur **Web app** select karein.
-3. Settings me:
-   - **Description:** `Poojra Silvassa Leads Webhook`
-   - **Execute as:** `Me (apna email)`
-   - **Who has access:** **`Anyone`** ⚠️ *(Zaroor "Anyone" select karein, taaki customers bina Google login ke data bhej sakein)*
+## 2. Deploy Google Apps Script (Step-by-Step)
+
+### Step 1: Open Apps Script in Your Spreadsheet
+1. Open your Google Sheet:  
+   **[https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit](https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit)**
+2. In the top menu, click **Extensions** > **Apps Script**.
+
+### Step 2: Paste the Backend Code
+1. In the Apps Script code editor, delete any existing code (press `Ctrl + A` then `Delete`).
+2. Copy the entire contents of [`google_apps_script.js`](./google_apps_script.js) from this repository and paste it into the editor.
+3. Press **Ctrl + S** (or click the disk icon) to save the script.
+
+### Step 3: Deploy as a Web App
+1. At the top-right corner, click **Deploy** > **New deployment**.
+2. Click the gear icon (**Select type**) next to "Select type" and choose **Web app**.
+3. Configure the deployment settings:
+   - **Description:** `Poojra Silvassa Wheel Webhook`
+   - **Execute as:** `Me (your Google email)`
+   - **Who has access:** **`Anyone`** ⚠️ *(CRITICAL: Must be "Anyone" so the landing page can record customer entries without requiring customers to log in).*
 4. Click **Deploy**.
-5. Google permission maangega:
-   - Click **Authorize access**
-   - Apna Google account select karein
-   - Agar *"Google hasn't verified this app"* screen aaye toh click karein **Advanced** (niche chhota sa likha hota hai)
-   - Click **Go to Poojra Leads (unsafe)**
-   - Click **Allow**
-6. Deployment complete hone par aapko ek **Web app URL** milega:
+
+### Step 4: Authorize Google Permissions
+1. Click **Authorize access**.
+2. Choose your Google account.
+3. If Google shows *"Google hasn't verified this app"*:
+   - Click **Advanced** (at the bottom-left).
+   - Click **Go to Poojra Silvassa Webhook (unsafe)**.
+   - Click **Allow**.
+4. Once deployment succeeds, Google will display your **Web app URL**:
    `https://script.google.com/macros/s/AKfycb.../exec`
-7. Is Web app URL ko copy kar lijiye aur chat me bhej dijiye (ya website par paste kar dein)!
+5. Copy this URL!
 
 ---
 
-### ✅ Result:
-- Jaise hi koi customer wheel ghumayega aur apna Name, Mobile Number, aur Brand bharega, wo entry **seedha aapki sheet me exact Name, Mobile Number, Brand columns me add ho jayegi**!
+## 3. Connect the Web App URL to Your Landing Page
+
+You have two easy ways to insert the URL:
+
+### Method A: Directly via the Landing Page (Instant - No Code Edit Required)
+1. Open the landing page (`http://localhost:8080/` or your live URL).
+2. Spin the wheel to open the Winner Modal.
+3. Click the link at the bottom: **⚙️ Setup / Change Google Sheet Link**.
+4. Paste your Web App `/exec` URL and click **OK**.
+5. Done! All future submissions will go directly to your spreadsheet.
+
+### Method B: In `index.html` (Permanent)
+1. Open `index.html`.
+2. Locate line **1197**:
+   ```javascript
+   const GOOGLE_SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+   ```
+3. Replace `'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE'` with your actual deployed URL:
+   ```javascript
+   const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYED_ID/exec';
+   ```
+4. Save the file.
+
+---
+
+## 4. Verification Test
+
+To verify that the complete data flow is working:
+1. Open the landing page and click **SPIN NOW**.
+2. When the wheel stops and the registration form appears, fill in:
+   - **Full Name:** `Himanshu`
+   - **Mobile Number:** `9328603748`
+   - **Brand Name:** `IPHONE`
+3. Click **🎁 Submit Now**.
+4. The button will show `⏳ Submitting to Sheet...`.
+5. Upon confirmation from your Apps Script backend, the modal switches to the **Claim Registered!** success card.
+6. Open your Google Sheet:
+   A new row will be present with `Himanshu`, `9328603748`, `IPHONE`, the exact prize won, and timestamp!
