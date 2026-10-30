@@ -2,9 +2,9 @@
  * ============================================================================
  * POOJRA SILVASSA - GOOGLE APPS SCRIPT WEBHOOK FOR SPIN & WIN
  * ============================================================================
- * Target Spreadsheet ID: 1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY
+ * Target Spreadsheet ID: 1Cfo54t4sB13_CZH7hRMULyS5CfM39QGJcM4mmNbPvJk
  * Target Spreadsheet URL:
- * https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit?usp=drivesdk
+ * https://docs.google.com/spreadsheets/d/1Cfo54t4sB13_CZH7hRMULyS5CfM39QGJcM4mmNbPvJk/edit?gid=0#gid=0
  *
  * Required Target Columns in the First Worksheet:
  * 1. Timestamp
@@ -16,7 +16,7 @@
  */
 
 // Target Google Sheet ID - Exact ID specified for Poojra Silvassa
-var SPREADSHEET_ID = "1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY";
+var SPREADSHEET_ID = "1Cfo54t4sB13_CZH7hRMULyS5CfM39QGJcM4mmNbPvJk";
 
 /**
  * Handles HTTP POST requests from the Spinning Wheel landing page form
@@ -32,19 +32,27 @@ function doPost(e) {
   }
 
   try {
-    // 1. Open Target Spreadsheet by explicit ID
-    var doc;
+    // 1. Open Target Spreadsheet (tries active sheet first if container-bound, then by explicit ID)
+    var doc = null;
     try {
-      doc = SpreadsheetApp.openById(SPREADSHEET_ID);
-    } catch (openErr) {
-      // Fallback if bound directly as container script
       doc = SpreadsheetApp.getActiveSpreadsheet();
+    } catch (eActive) {}
+
+    if (!doc) {
+      try {
+        doc = SpreadsheetApp.openById(SPREADSHEET_ID);
+      } catch (openErr) {
+        return createJsonResponse({
+          status: "error",
+          message: "Spreadsheet could not be opened: " + openErr.toString()
+        });
+      }
     }
 
     if (!doc) {
       return createJsonResponse({
         status: "error",
-        message: "Spreadsheet could not be opened. Please check spreadsheet ID: " + SPREADSHEET_ID
+        message: "Spreadsheet could not be opened. Please verify spreadsheet ID: " + SPREADSHEET_ID
       });
     }
 
@@ -223,12 +231,20 @@ function doPost(e) {
 }
 
 /**
- * Handles HTTP GET requests - used to quickly test if the Web App is alive
+ * Handles HTTP GET requests:
+ * 1. Health check verification when opened in browser
+ * 2. Fallback submission when query parameters are supplied
  */
 function doGet(e) {
+  // If submission query parameters are provided, process them via doPost
+  if (e && e.parameter && (e.parameter.fullName || e.parameter.name || e.parameter.phone || e.parameter.mobileNumber)) {
+    return doPost(e);
+  }
+
+  // Health check response
   return createJsonResponse({
     status: "active",
-    message: "Poojra Silvassa Webhook is ACTIVE",
+    message: "Poojra Silvassa Webhook is ACTIVE and connected to Google Sheet",
     targetSpreadsheetId: SPREADSHEET_ID,
     timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "dd/MM/yyyy HH:mm:ss")
   });
@@ -241,4 +257,31 @@ function createJsonResponse(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * ============================================================================
+ * ONE-CLICK TEST FUNCTION (For Apps Script Editor)
+ * ============================================================================
+ * Select "testRecord" in the function dropdown above and click "Run".
+ * This immediately tests row insertion into your spreadsheet so you can verify
+ * that your sheet permissions and columns work BEFORE deploying as a Web App!
+ * ============================================================================
+ */
+function testRecord() {
+  var testEvent = {
+    parameter: {
+      fullName: "Test Customer (Poojra)",
+      mobileNumber: "9876543210",
+      brandName: "Apple iPhone 15",
+      spinResult: "Neckband Wireless Hi-Bass",
+      coupon: "VP-TEST-" + Math.floor(1000 + Math.random() * 9000)
+    }
+  };
+
+  Logger.log("--- Starting Test Submission ---");
+  var response = doPost(testEvent);
+  var output = response.getContent();
+  Logger.log("Result: " + output);
+  return output;
 }

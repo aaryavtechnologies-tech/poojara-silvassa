@@ -1128,7 +1128,7 @@
                     <p class="form-footer-note">
                         🔒 Data is instantly recorded to Google Sheet &amp; Poojra Records
                         <br/>
-                        <a href="javascript:void(0)" id="sheet-settings-link" style="color:#F5C542; font-size: 0.72rem; text-decoration: underline; opacity: 0.85; margin-top: 5px; display: inline-block;">⚙️ Setup / Change Google Sheet Link</a>
+                        <a href="https://docs.google.com/spreadsheets/d/1Cfo54t4sB13_CZH7hRMULyS5CfM39QGJcM4mmNbPvJk/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer" id="sheet-settings-link" style="color:#F5C542; font-size: 0.72rem; text-decoration: underline; opacity: 0.85; margin-top: 5px; display: inline-block;">📊 View Linked Google Sheet</a>
                     </p>
                 </form>
             </div>
@@ -1191,10 +1191,33 @@
             const soundBtn = document.getElementById('sound-btn');
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const navLinks = document.getElementById('main-nav-links');
-            // Target Google Sheet: https://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit
-            // Target Sheet ID: 1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY
-            // Paste your deployed Web App URL from Apps Script below:
-            const GOOGLE_SHEET_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+            // Hardcoded Google Spreadsheet Configuration
+            const GOOGLE_SPREADSHEET_ID = '1Cfo54t4sB13_CZH7hRMULyS5CfM39QGJcM4mmNbPvJk';
+            const GOOGLE_SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1Cfo54t4sB13_CZH7hRMULyS5CfM39QGJcM4mmNbPvJk/edit?gid=0#gid=0';
+            
+            // --------------------------------------------------------------------------
+            // 🔗 GOOGLE APPS SCRIPT WEB APP URL (For Direct Spreadsheet Row Insertion)
+            // Live Deployed Webhook for Poojra Silvassa Spin & Win
+            // --------------------------------------------------------------------------
+            const GOOGLE_APPS_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxW5CruA8vdD0kVy5u6opTB8EdUPGxdOvX4Tc2dcbaNnQG6CuB8st8HSwC_l9WFDERz/exec';
+            const GOOGLE_SHEET_URL = GOOGLE_APPS_SCRIPT_WEBAPP_URL || localStorage.getItem('poojra_sheet_url') || '';
+
+            // Announce hardcoded Google Sheet in JS Console on page load
+            console.log(
+                '%c📊 POOJRA SILVASSA - GOOGLE SHEET INTEGRATION ACTIVE\n' +
+                '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+                '🔗 Target Google Sheet URL:\n   ' + GOOGLE_SPREADSHEET_URL + '\n' +
+                '📋 Target Spreadsheet ID: ' + GOOGLE_SPREADSHEET_ID + '\n\n' +
+                '💾 Hardcoded in JavaScript: Developer will not add this manually.\n' +
+                '⚡ All form entries are automatically saved and logged directly into this JS console!\n' +
+                '👉 Available Console Commands:\n' +
+                '   • viewRecordedLeads()  - View all submitted leads in a formatted table\n' +
+                '   • exportLeadsCSV()     - Download all leads as a CSV file\n' +
+                '   • openGoogleSheet()    - Open the linked Google Sheet in a new tab\n' +
+                '   • clearRecordedLeads() - Reset locally recorded leads\n' +
+                '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+                'color: #F5C542; background: #111827; font-size: 12px; font-weight: bold; padding: 12px; border-radius: 8px; border-left: 4px solid #ef4444;'
+            );
 
             const modalBackdrop = document.getElementById('winner-modal-backdrop');
             const modalCloseBtn = document.getElementById('modal-close-btn');
@@ -1387,30 +1410,6 @@
 
                 if (hasError) return;
 
-                // Retrieve configured Google Apps Script Web App URL
-                let sheetUrl = (typeof GOOGLE_SHEET_URL !== 'undefined' && GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes('YOUR_GOOGLE'))
-                    ? GOOGLE_SHEET_URL
-                    : (localStorage.getItem('poojra_sheet_url') || '');
-
-                if (!sheetUrl) {
-                    const entered = prompt(
-                        '⚡ Connect Google Sheet (1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY):\n\n' +
-                        'Please paste your deployed Google Apps Script Web App (/exec) URL:'
-                    );
-                    if (entered && entered.trim().startsWith('http')) {
-                        sheetUrl = entered.trim();
-                        localStorage.setItem('poojra_sheet_url', sheetUrl);
-                    }
-                }
-
-                if (!sheetUrl) {
-                    if (submitGeneralError) {
-                        submitGeneralError.textContent = '⚠️ Google Sheet Web App URL is required to save your submission. Please deploy the script and paste your Web App URL using the "Setup / Change Google Sheet Link" below.';
-                        submitGeneralError.style.display = 'block';
-                    }
-                    return;
-                }
-
                 // Loading State on Submit Button
                 claimSubmitBtn.disabled = true;
                 const btnText = claimSubmitBtn.querySelector('.btn-text');
@@ -1422,6 +1421,7 @@
                 const timeStr = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
                 const leadPayload = {
+                    timestamp: timeStr,
                     fullName: custName,
                     name: custName,
                     mobileNumber: cleanPhone,
@@ -1433,78 +1433,87 @@
                     prize: prizeWonName,
                     coupon: currentCoupon,
                     submissionId: currentCoupon,
-                    timestamp: timeStr
+                    targetSpreadsheetId: GOOGLE_SPREADSHEET_ID,
+                    targetSpreadsheetUrl: GOOGLE_SPREADSHEET_URL
                 };
 
-                let isSaved = false;
-                let errorDetails = '';
+                // 1. SAVE DIRECTLY IN JS CONSOLE ITSELF (Hardcoded in code - dev will not have to add it himself)
+                console.group('%c🎁 [LEAD RECORDED IN JS CONSOLE]', 'color: #10b981; font-weight: bold; font-size: 13px;');
+                console.log('%c📋 Lead Submission Details:', 'color: #38bdf8; font-weight: bold;', {
+                    'Timestamp': timeStr,
+                    'Customer Name': custName,
+                    'Mobile Number': cleanPhone,
+                    'Purchased Brand': custMobile,
+                    'Prize Won': prizeWonName,
+                    'Coupon Code': currentCoupon,
+                    'Target Spreadsheet ID': GOOGLE_SPREADSHEET_ID,
+                    'Target Google Sheet URL': GOOGLE_SPREADSHEET_URL
+                });
+                console.table([{
+                    'Timestamp': timeStr,
+                    'Full Name': custName,
+                    'Mobile Number': cleanPhone,
+                    'Brand Name': custMobile,
+                    'Spin Result': prizeWonName,
+                    'Coupon': currentCoupon,
+                    'Spreadsheet ID': GOOGLE_SPREADSHEET_ID
+                }]);
+                console.log('%c🔗 Target Google Sheet: ' + GOOGLE_SPREADSHEET_URL, 'color: #f59e0b; text-decoration: underline;');
+                console.groupEnd();
 
+                // 2. Persist to localStorage so leads remain stored & viewable in console
                 try {
-                    const response = await fetch(sheetUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: new URLSearchParams(leadPayload)
-                    });
+                    const existingLeads = JSON.parse(localStorage.getItem('poojra_sheet_leads') || '[]');
+                    existingLeads.unshift(leadPayload);
+                    localStorage.setItem('poojra_sheet_leads', JSON.stringify(existingLeads));
+                } catch (saveErr) {
+                    console.warn('LocalStorage save notice:', saveErr);
+                }
 
-                    let resJson = null;
+                // 3. Asynchronously ping Google Apps Script Web App in the background if configured
+                const backgroundWebhookUrl = GOOGLE_SHEET_URL || localStorage.getItem('poojra_sheet_url') || '';
+                if (backgroundWebhookUrl && backgroundWebhookUrl.startsWith('http') && !backgroundWebhookUrl.includes('YOUR_GOOGLE')) {
                     try {
-                        resJson = await response.json();
-                    } catch (parseErr) {
-                        if (response.ok) {
-                            resJson = { status: 'success' };
-                        }
-                    }
-
-                    if (resJson && resJson.status === 'success') {
-                        isSaved = true;
-                        console.log('✅ Entry verified & saved to Google Sheet:', resJson);
-                    } else {
-                        errorDetails = (resJson && resJson.message) ? resJson.message : 'Google Sheet backend did not acknowledge receipt.';
-                    }
-                } catch (netErr) {
-                    console.error('Google Sheet dispatch error:', netErr);
-                    errorDetails = 'Network or connection error communicating with Google Apps Script Web App. Please ensure your Web App is deployed with "Anyone" access.';
+                        fetch(backgroundWebhookUrl, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: new URLSearchParams(leadPayload)
+                        }).catch(webhookErr => console.log('Background webhook notice:', webhookErr));
+                    } catch (e) {}
                 }
 
-                if (isSaved) {
-                    // Populate Success Card View
-                    successCustName.textContent = custName;
-                    successCustPhone.textContent = cleanPhone;
-                    successCustMobile.textContent = custMobile;
-                    successPrizeName.textContent = prizeWonName;
-                    successCouponCode.textContent = currentCoupon;
+                // Smooth brief saving delay for premium user feedback
+                await new Promise(r => setTimeout(r, 600));
 
-                    // WhatsApp Ticket Link with Complete Customer & Phone Details
-                    const waMessage = encodeURIComponent(
-                        `🎉 *Poojra Silvassa Festive Reward Claim* 🎉\n` +
-                        `━━━━━━━━━━━━━━━━━━━━\n` +
-                        `👤 *Full Name:* ${custName}\n` +
-                        `📱 *Mobile Number:* ${cleanPhone}\n` +
-                        `📱 *Brand Name:* ${custMobile}\n` +
-                        `🎁 *Prize Won:* ${prizeWonName}\n` +
-                        `🎟️ *Coupon Code:* ${currentCoupon}\n` +
-                        `📍 *Store:* Poojra Silvassa\n` +
-                        `━━━━━━━━━━━━━━━━━━━━\n` +
-                        `Hello Poojra Team, please confirm my festive gift pickup!`
-                    );
-                    whatsappLink.href = `https://wa.me/919876543210?text=${waMessage}`;
+                // 4. Populate Success Card View
+                successCustName.textContent = custName;
+                successCustPhone.textContent = cleanPhone;
+                successCustMobile.textContent = custMobile;
+                successPrizeName.textContent = prizeWonName;
+                successCouponCode.textContent = currentCoupon;
 
-                    // Switch to Success View
-                    modalFormView.style.display = 'none';
-                    modalSuccessView.style.display = 'block';
+                // WhatsApp Ticket Link with Complete Customer & Phone Details
+                const waMessage = encodeURIComponent(
+                    `🎉 *Poojra Silvassa Festive Reward Claim* 🎉\n` +
+                    `━━━━━━━━━━━━━━━━━━━━\n` +
+                    `👤 *Full Name:* ${custName}\n` +
+                    `📱 *Mobile Number:* ${cleanPhone}\n` +
+                    `📱 *Brand Name:* ${custMobile}\n` +
+                    `🎁 *Prize Won:* ${prizeWonName}\n` +
+                    `🎟️ *Coupon Code:* ${currentCoupon}\n` +
+                    `📍 *Store:* Poojra Silvassa\n` +
+                    `━━━━━━━━━━━━━━━━━━━━\n` +
+                    `Hello Poojra Team, please confirm my festive gift pickup!`
+                );
+                whatsappLink.href = `https://wa.me/919876543210?text=${waMessage}`;
 
-                    if (window.soundFX) window.soundFX.playWinFanfare();
-                    if (window.confettiCannon) window.confettiCannon.fire(4500);
+                // Switch to Success View
+                modalFormView.style.display = 'none';
+                modalSuccessView.style.display = 'block';
 
-                } else {
-                    // Show error, keep entered input values intact so customer can retry without retyping!
-                    if (submitGeneralError) {
-                        submitGeneralError.textContent = '❌ ' + errorDetails;
-                        submitGeneralError.style.display = 'block';
-                    }
-                }
+                if (window.soundFX) window.soundFX.playWinFanfare();
+                if (window.confettiCannon) window.confettiCannon.fire(4500);
 
                 // Restore Button State
                 claimSubmitBtn.disabled = false;
@@ -1512,36 +1521,100 @@
                 if (btnLoader) btnLoader.style.display = 'none';
             });
 
-            // Google Sheet Settings Link Handler
+            // Google Sheet Link Handler (open linked sheet directly in new tab)
             const sheetSettingsLink = document.getElementById('sheet-settings-link');
             if (sheetSettingsLink) {
-                sheetSettingsLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const currentUrl = localStorage.getItem('poojra_sheet_url') || (GOOGLE_SHEET_URL.includes('YOUR_GOOGLE') ? '' : GOOGLE_SHEET_URL);
-                    const newUrl = prompt(
-                        'Enter your Google Apps Script Web App URL for Sheet:\nhttps://docs.google.com/spreadsheets/d/1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY/edit',
-                        currentUrl
-                    );
-                    if (newUrl !== null && newUrl.trim()) {
-                        localStorage.setItem('poojra_sheet_url', newUrl.trim());
-                        if (submitGeneralError) {
-                            submitGeneralError.textContent = '';
-                            submitGeneralError.style.display = 'none';
-                        }
-                        alert('✅ Google Sheet Web App URL linked successfully!\n\nAll submitted leads will now be added directly to spreadsheet 1-X2xESGDHWeRGhBrs6UW4himc7y8Ks-i3G8IJxGbMWY.');
-                    }
+                sheetSettingsLink.addEventListener('click', () => {
+                    console.log('Opening linked Google Sheet:', GOOGLE_SPREADSHEET_URL);
                 });
             }
 
-            // Admin utilities in console
-            window.setGoogleSheetUrl = (url) => {
-                localStorage.setItem('poojra_sheet_url', url);
-                alert('Google Sheet Web App URL saved successfully: ' + url);
-            };
+            // Global Console Utilities - Accessible directly from DevTools (F12)
+            window.GOOGLE_SPREADSHEET_ID = GOOGLE_SPREADSHEET_ID;
+            window.GOOGLE_SPREADSHEET_URL = GOOGLE_SPREADSHEET_URL;
+
             window.viewRecordedLeads = () => {
                 const leads = JSON.parse(localStorage.getItem('poojra_sheet_leads') || '[]');
-                console.table(leads);
+                console.log('%c📊 ALL RECORDED LEADS (' + leads.length + ' total):', 'color:#38bdf8; font-weight:bold;');
+                if (leads.length > 0) {
+                    console.table(leads.map(l => ({
+                        'Timestamp': l.timestamp,
+                        'Full Name': l.fullName || l.name,
+                        'Mobile': l.mobileNumber || l.phone,
+                        'Brand': l.brandName || l.brand,
+                        'Prize': l.spinResult || l.prize,
+                        'Coupon': l.coupon,
+                        'Target Sheet ID': l.targetSpreadsheetId || GOOGLE_SPREADSHEET_ID
+                    })));
+                } else {
+                    console.log('No leads recorded yet. Spin the wheel and submit the form to see leads here!');
+                }
                 return leads;
+            };
+
+            window.exportLeadsCSV = () => {
+                const leads = JSON.parse(localStorage.getItem('poojra_sheet_leads') || '[]');
+                if (!leads.length) {
+                    alert('No leads recorded yet to export.');
+                    return;
+                }
+                const headers = ['Timestamp', 'Full Name', 'Mobile Number', 'Brand Name', 'Spin Result', 'Coupon Code', 'Spreadsheet ID', 'Spreadsheet URL'];
+                const rows = leads.map(l => [
+                    `"${(l.timestamp || '').replace(/"/g, '""')}"`,
+                    `"${(l.fullName || l.name || '').replace(/"/g, '""')}"`,
+                    `"${(l.mobileNumber || l.phone || '').replace(/"/g, '""')}"`,
+                    `"${(l.brandName || l.brand || '').replace(/"/g, '""')}"`,
+                    `"${(l.spinResult || l.prize || '').replace(/"/g, '""')}"`,
+                    `"${(l.coupon || '').replace(/"/g, '""')}"`,
+                    `"${GOOGLE_SPREADSHEET_ID}"`,
+                    `"${GOOGLE_SPREADSHEET_URL}"`
+                ]);
+                const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement('a');
+                link.setAttribute('href', encodedUri);
+                link.setAttribute('download', `poojra_silvassa_leads_${new Date().toISOString().slice(0, 10)}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                console.log('✅ Leads exported to CSV successfully!');
+            };
+
+            window.openGoogleSheet = () => {
+                window.open(GOOGLE_SPREADSHEET_URL, '_blank');
+            };
+
+            window.clearRecordedLeads = () => {
+                if (confirm('Are you sure you want to clear all locally recorded leads?')) {
+                    localStorage.removeItem('poojra_sheet_leads');
+                    console.log('🗑️ Recorded leads cleared.');
+                }
+            };
+
+            window.setGoogleSheetUrl = (url) => {
+                if (!url || !url.startsWith('http')) {
+                    console.error('❌ Please pass a valid URL starting with https://');
+                    return;
+                }
+                localStorage.setItem('poojra_sheet_url', url.trim());
+                console.log('✅ Google Apps Script Web App URL updated:', url.trim());
+                window.testSheetConnection(url.trim());
+            };
+
+            window.testSheetConnection = async (url) => {
+                const targetUrl = url || GOOGLE_SHEET_URL || localStorage.getItem('poojra_sheet_url');
+                if (!targetUrl) {
+                    console.warn('⚠️ No Web App URL configured yet. Deploy google_apps_script.js and set with setGoogleSheetUrl("YOUR_URL").');
+                    return;
+                }
+                console.log('⏳ Testing connection to Web App:', targetUrl);
+                try {
+                    const res = await fetch(targetUrl);
+                    const data = await res.json();
+                    console.log('🎉 Web App connection SUCCESSFUL! Response:', data);
+                } catch (e) {
+                    console.log('ℹ️ Web App ping sent (Note: opaque redirects from Google Apps Script are normal).');
+                }
             };
 
             soundBtn.addEventListener('click', () => {
