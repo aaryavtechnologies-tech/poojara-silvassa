@@ -3,8 +3,8 @@
 <head>
     <meta charSet="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Poojra Silvassa | Navratri Spin &amp; Win</title>
-    <meta name="description" content="Celebrate Navratri with exciting offers, Neckband, Air Buds, Trolley Bags, Kitchen Sets, and jackpot prizes from Poojra Silvassa."/>
+    <title>Poojra Silvassa | Diwali Spin &amp; Win</title>
+    <meta name="description" content="Celebrate Diwali with exciting offers, Neckband, Air Buds, Trolley Bags, Kitchen Sets, and jackpot prizes from Poojra Silvassa."/>
     <link rel="icon" type="image/png" href="assets/images/logo.png"/>
     
     <!-- Demo CSS -->
@@ -84,30 +84,7 @@
             display: block;
         }
 
-        /* Visible elements override (removing Next.js SSR opacity:0) */
-        .offer-card {
-            opacity: 1 !important;
-            transform: none !important;
-        }
-        .step {
-            opacity: 1 !important;
-            transform: none !important;
-        }
-        .stats-grid > div {
-            opacity: 1 !important;
-            transform: none !important;
-        }
-        .testimonial > div {
-            opacity: 1 !important;
-            transform: none !important;
-        }
-        .faq-item div[style] {
-            height: auto !important;
-        }
-
-
-
-        /* Clean Footer without excess space */
+        /* Clean Footer */
         footer {
             margin-bottom: 0 !important;
             padding-bottom: 0 !important;
@@ -518,6 +495,69 @@
         .whatsapp-claim-btn:hover {
             transform: translateY(-2px);
         }
+        /* Compact Hero Top Spacing */
+        .hero {
+            min-height: auto !important;
+            padding-top: 72px !important;
+        }
+        .hero-content {
+            min-height: auto !important;
+            padding-top: 18px !important;
+        }
+        .hero-intro {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        .hero-kicker {
+            margin: 0 0 6px 0 !important;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 3.6vw, 3.4rem) !important;
+            line-height: 1.08 !important;
+            letter-spacing: -0.025em !important;
+            margin-top: 6px !important;
+            margin-bottom: 14px !important;
+        }
+        @media (max-width: 900px) {
+            .hero {
+                padding-top: 66px !important;
+            }
+            .hero-content {
+                padding-top: 14px !important;
+                gap: 20px !important;
+            }
+        }
+        @media (max-width: 640px) {
+            .navbar .nav-spin {
+                padding: 0 16px;
+                font-size: 12px;
+                min-height: 40px;
+                gap: 6px;
+            }
+            .hero {
+                padding-top: 66px !important;
+            }
+            .hero-content {
+                padding-top: 8px !important;
+                padding-bottom: 36px !important;
+                gap: 16px !important;
+            }
+            .hero-intro {
+                margin: 0 auto !important;
+                padding: 0 !important;
+            }
+            .hero-kicker {
+                font-size: 9px !important;
+                letter-spacing: 0.16em !important;
+                margin: 0 0 4px 0 !important;
+            }
+            .hero h1 {
+                font-size: clamp(1.7rem, 7.5vw, 2.25rem) !important;
+                line-height: 1.1 !important;
+                margin-top: 4px !important;
+                margin-bottom: 10px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -534,22 +574,9 @@
                 </span>
             </a>
 
-            <nav class="nav-links" id="main-nav-links" aria-label="Primary navigation">
-                <a href="#home">Home</a>
-                <a href="#offers">Offers</a>
-                <a href="#spin-wheel">Prizes</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#faq">FAQ</a>
-                <button class="nav-spin mobile-only trigger-spin-btn">Spin now</button>
-            </nav>
-
-            <button class="nav-spin desktop-only trigger-spin-btn">
+            <button class="nav-spin trigger-spin-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg> 
                 Spin now
-            </button>
-
-            <button class="menu-button" id="mobile-menu-btn" aria-expanded="false" aria-label="Toggle menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
             </button>
         </header>
 
@@ -569,10 +596,10 @@
                 <!-- Left Intro -->
                 <div class="hero-intro">
                     <p class="hero-kicker">
-                        <span></span> Festival of devotion <b>•</b> Festival of offers
+                        <span></span> Festival of lights <b>•</b> Festival of offers
                     </p>
                     <h1>
-                        Celebrate <span class="gold-text">Navratri</span><br/>
+                        Celebrate <span class="gold-text">Diwali</span><br/>
                         with <span class="pink-text">Exciting Offers</span>
                     </h1>
                     <p class="hero-sub">
@@ -757,7 +784,7 @@
                         </button>
 
                         <div class="countdown-card" aria-label="Limited time offer countdown">
-                            <p>Limited time Navratri offer</p>
+                            <p>Limited time Diwali offer</p>
                             <div class="countdown-grid">
                                 <div><strong id="cd-days">02</strong><span>days</span></div>
                                 <div><strong id="cd-hours">14</strong><span>hours</span></div>
@@ -770,284 +797,11 @@
             </div>
         </section>
 
-        <!-- ==========================================================================
-             OFFERS SECTION (from demo)
-             ========================================================================== -->
-        <section class="offers-section" id="offers">
-            <div class="section-heading">
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg> 
-                    Festive favourites
-                </p>
-                <h2>More joy in every spin</h2>
-            </div>
-            <div class="offer-grid">
-                <article class="offer-card rose">
-                    <div class="offer-illustration">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg>
-                    </div>
-                    <div>
-                        <h3>10% OFF</h3>
-                        <p>On all festive products</p>
-                        <button class="trigger-spin-btn">Spin &amp; get <span>›</span></button>
-                    </div>
-                </article>
-
-                <article class="offer-card amber">
-                    <div class="offer-illustration">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-indian-rupee"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="M8 8h8"></path><path d="M8 12h8"></path><path d="m13 17-5-1h1a4 4 0 0 0 0-8"></path></svg>
-                    </div>
-                    <div>
-                        <h3>Flat ₹500 OFF</h3>
-                        <p>On orders above ₹2499</p>
-                        <button class="trigger-spin-btn">Spin &amp; get <span>›</span></button>
-                    </div>
-                </article>
-
-                <article class="offer-card violet">
-                    <div class="offer-illustration">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                    </div>
-                    <div>
-                        <h3>Buy 1 Get 1</h3>
-                        <p>On selected festive accessories</p>
-                        <button class="trigger-spin-btn">Spin &amp; get <span>›</span></button>
-                    </div>
-                </article>
-
-                <article class="offer-card mint">
-                    <div class="offer-illustration">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-percent"><line x1="19" x2="5" y1="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
-                    </div>
-                    <div>
-                        <h3>Free Gift</h3>
-                        <p>On every eligible spin</p>
-                        <button class="trigger-spin-btn">Spin &amp; get <span>›</span></button>
-                    </div>
-                </article>
-            </div>
-        </section>
 
         <!-- ==========================================================================
-             HOW IT WORKS SECTION (from demo)
+             FOOTER
              ========================================================================== -->
-        <section class="how-section" id="how-it-works">
-            <div class="section-heading ornamental">
-                <span></span>
-                <div>
-                    <p>Three simple steps</p>
-                    <h2>How It <em>Works</em></h2>
-                    <small>Get your festive offers in 3 simple steps</small>
-                </div>
-                <span></span>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-plus"><path d="M2 21a8 8 0 0 1 13.292-6"></path><circle cx="10" cy="8" r="5"></circle><path d="M19 16v6"></path><path d="M22 19h-6"></path></svg>
-                        <b>1</b>
-                    </div>
-                    <div>
-                        <h3>Sign Up</h3>
-                        <p>Enter your phone number or visit Poojra Silvassa.</p>
-                    </div>
-                    <span class="step-connector">›</span>
-                </div>
-
-                <div class="step">
-                    <div class="step-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mouse-pointer-click"><path d="M14 4.1 12 6"></path><path d="m5.1 8-2.9-.8"></path><path d="m6 12-1.9 2"></path><path d="M7.2 2.2 8 5.1"></path><path d="M9.037 9.69a.498.498 0 0 1 .653-.653l11 4.5a.5.5 0 0 1-.074.949l-4.349 1.041a1 1 0 0 0-.74.739l-1.04 4.35a.5.5 0 0 1-.95.074z"></path></svg>
-                        <b>2</b>
-                    </div>
-                    <div>
-                        <h3>Spin the Wheel</h3>
-                        <p>Try your luck and unlock festive offers &amp; gadgets.</p>
-                    </div>
-                    <span class="step-connector">›</span>
-                </div>
-
-                <div class="step">
-                    <div class="step-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg>
-                        <b>3</b>
-                    </div>
-                    <div>
-                        <h3>Claim Your Offer</h3>
-                        <p>Show your coupon code &amp; collect your gift at the store.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==========================================================================
-             TRUST SECTION (from demo)
-             ========================================================================== -->
-        <section class="trust-section" id="prizes">
-            <div class="trust-inner">
-                <div class="trust-title">
-                    <p>Trusted by Thousands</p>
-                    <h2>This Navratri</h2>
-                    <span>Real people. Real savings. Real happiness.</span>
-                </div>
-                <div class="stats-grid">
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                        <p><strong>5L+</strong><span>Happy Customers</span></p>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                        <p><strong>4.8/5</strong><span>Average Rating</span></p>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg>
-                        <p><strong>100%</strong><span>Secure &amp; Safe</span></p>
-                    </div>
-                    <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
-                        <p><strong>50+</strong><span>Top Brands</span></p>
-                    </div>
-                </div>
-
-                <div class="testimonial">
-                    <button id="prev-test-btn" aria-label="Previous testimonial">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"></path></svg>
-                    </button>
-                    <div>
-                        <div class="avatar" id="test-avatar">PS</div>
-                        <div>
-                            <blockquote id="test-quote">“Amazing offers! I got a 50% discount on my festive shopping. Loved the experience!”</blockquote>
-                            <div class="rating">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
-                            </div>
-                            <p><strong id="test-name">Priya Sharma</strong><span>Verified customer</span></p>
-                        </div>
-                    </div>
-                    <button id="next-test-btn" aria-label="Next testimonial">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==========================================================================
-             FAQ SECTION (from demo)
-             ========================================================================== -->
-        <section class="faq-section" id="faq">
-            <div class="section-heading">
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg> 
-                    Good to know
-                </p>
-                <h2>Your questions, answered</h2>
-            </div>
-            <div class="faq-list">
-                <div class="faq-item open">
-                    <button aria-expanded="true">
-                        <span>How does the Spin the Wheel offer work?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus"><path d="M5 12h14"></path></svg>
-                    </button>
-                    <div>
-                        <p>Tap the SPIN button and the wheel will select one of twelve rewards with fair random odds. Your result is tied directly to where the wheel stops, unlocking guaranteed prizes like Neckbands, Air Buds, Trolley Bags and Kitchen Sets!</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button aria-expanded="false">
-                        <span>Can I spin more than once?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                    </button>
-                    <div>
-                        <p>Yes! Every customer receives free lucky spins to unlock festive rewards during the celebration event.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button aria-expanded="false">
-                        <span>How do I claim my prize at Poojra Silvassa?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                    </button>
-                    <div>
-                        <p>Once you win, click the "Claim on WhatsApp" button or copy your coupon code. Show it at our Poojra Silvassa store counter to receive your gift instantly!</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button aria-expanded="false">
-                        <span>Can I combine this offer with another coupon?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                    </button>
-                    <div>
-                        <p>Selected festive vouchers can be combined with store walk-in discounts. Our store team will assist you with the best available saving at checkout.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button aria-expanded="false">
-                        <span>How long is my coupon valid?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                    </button>
-                    <div>
-                        <p>All winning coupons are valid for 7 days from the time of spin. We recommend sharing it to your WhatsApp right away so you don't lose it.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button aria-expanded="false">
-                        <span>Is there any purchase required to spin?</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-                    </button>
-                    <div>
-                        <p>No purchase is required to spin the wheel. It is a 100% free festive celebration initiative by Poojra Silvassa.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==========================================================================
-             FOOTER (from demo)
-             ========================================================================== -->
-        <footer id="contact">
-            <div class="footer-inner">
-                <div class="footer-brand">
-                    <a class="brand" href="#home">
-                        <img src="assets/images/logo.png" alt="Poojra Logo" class="brand-logo-img">
-                        <span>
-                            <strong>POOJRA<span></span></strong>
-                            <small>Celebrate more together</small>
-                        </span>
-                    </a>
-                    <p>Spin, shop and celebrate every joyful moment together with Poojra Silvassa.</p>
-                </div>
-
-                <nav aria-label="Footer navigation">
-                    <a href="#home">Home</a>
-                    <a href="#offers">Offers</a>
-                    <a href="#spin-wheel">Prizes</a>
-                    <a href="#how-it-works">How It Works</a>
-                    <a href="#faq">FAQ</a>
-                    <a href="#contact">Contact</a>
-                </nav>
-
-                <div class="footer-contact">
-                    <a href="mailto:support@poojra.com">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                        support@poojra.com
-                    </a>
-                    <a href="tel:+919876543210">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                        +91 98765 43210
-                    </a>
-                    <div class="socials">
-                        <a href="#contact" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg></a>
-                        <a href="#contact" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                        <a href="#contact" aria-label="WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></a>
-                    </div>
-                </div>
-            </div>
+        <footer>
             <div class="footer-bottom">
                 © 2026 Poojra Silvassa. Made for brighter celebrations. All Rights Reserved.
             </div>
@@ -1074,7 +828,7 @@
                 <div class="coupon">
                     <div>
                         <span class="coupon-label">COUPON CODE</span>
-                        <strong id="modal-coupon-code">VP-NAV-8429</strong>
+                        <strong id="modal-coupon-code">VP-DIW-8429</strong>
                     </div>
                     <button type="button" id="copy-code-btn">Copy code</button>
                 </div>
@@ -1189,8 +943,6 @@
             const pointer = document.getElementById('wheel-pointer');
             const metaMsg = document.getElementById('wheel-meta-msg');
             const soundBtn = document.getElementById('sound-btn');
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const navLinks = document.getElementById('main-nav-links');
             // Hardcoded Google Spreadsheet Configuration
             const GOOGLE_SPREADSHEET_ID = '1Cfo54t4sB13_CZH7hRMULyS5CfM39QGJcM4mmNbPvJk';
             const GOOGLE_SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1Cfo54t4sB13_CZH7hRMULyS5CfM39QGJcM4mmNbPvJk/edit?gid=0#gid=0';
@@ -1313,7 +1065,7 @@
                     if (window.soundFX) window.soundFX.playWinFanfare();
                     if (window.confettiCannon) window.confettiCannon.fire(5500);
 
-                    currentCoupon = 'VP-NAV-' + Math.floor(1000 + Math.random() * 9000);
+                    currentCoupon = 'VP-DIW-' + Math.floor(1000 + Math.random() * 9000);
                     modalIcon.innerHTML = wonPrize.svg;
                     modalPrizeName.textContent = wonPrize.name;
                     modalCouponCode.textContent = currentCoupon;
@@ -1624,16 +1376,6 @@
                 }
             });
 
-            if (mobileMenuBtn && navLinks) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    const open = navLinks.classList.toggle('open');
-                    mobileMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-                });
-                navLinks.querySelectorAll('a').forEach(a => {
-                    a.addEventListener('click', () => navLinks.classList.remove('open'));
-                });
-            }
-
             // Countdown Timer
             const targetDate = new Date();
             targetDate.setDate(targetDate.getDate() + 3);
@@ -1656,77 +1398,6 @@
             setInterval(updateTimer, 1000);
             updateTimer();
 
-            // FAQ Accordion
-            document.querySelectorAll('.faq-item').forEach(item => {
-                const btn = item.querySelector('button');
-                if (btn) {
-                    btn.addEventListener('click', () => {
-                        const isOpen = item.classList.contains('open');
-                        document.querySelectorAll('.faq-item').forEach(i => {
-                            i.classList.remove('open');
-                            const b = i.querySelector('button');
-                            if (b) b.setAttribute('aria-expanded', 'false');
-                            const sv = b ? b.querySelector('svg') : null;
-                            if (sv) sv.innerHTML = '<path d="M5 12h14"></path><path d="M12 5v14"></path>';
-                        });
-                        if (!isOpen) {
-                            item.classList.add('open');
-                            btn.setAttribute('aria-expanded', 'true');
-                            const sv = btn.querySelector('svg');
-                            if (sv) sv.innerHTML = '<path d="M5 12h14"></path>';
-                        }
-                    });
-                }
-            });
-
-            // Testimonials
-            const testimonials = [
-                {
-                    quote: "Amazing offers! I got a 50% discount on my festive shopping. Loved the experience!",
-                    name: "Priya Sharma",
-                    initials: "PS"
-                },
-                {
-                    quote: "The wheel felt so much fun, and my free-gift coupon worked instantly at checkout.",
-                    name: "Meera Patel",
-                    initials: "MP"
-                },
-                {
-                    quote: "A lovely festive surprise — I won cashback and found everything I needed for Garba night.",
-                    name: "Aarav Shah",
-                    initials: "AS"
-                }
-            ];
-            let tIdx = 0;
-            const quoteEl = document.getElementById('test-quote');
-            const nameEl = document.getElementById('test-name');
-            const avatarEl = document.getElementById('test-avatar');
-            const prevBtn = document.getElementById('prev-test-btn');
-            const nextBtn = document.getElementById('next-test-btn');
-
-            function renderTestimonial() {
-                const t = testimonials[tIdx];
-                if (quoteEl) quoteEl.textContent = `“${t.quote}”`;
-                if (nameEl) nameEl.textContent = t.name;
-                if (avatarEl) avatarEl.textContent = t.initials;
-            }
-
-            if (prevBtn) {
-                prevBtn.addEventListener('click', () => {
-                    tIdx = (tIdx - 1 + testimonials.length) % testimonials.length;
-                    renderTestimonial();
-                });
-            }
-            if (nextBtn) {
-                nextBtn.addEventListener('click', () => {
-                    tIdx = (tIdx + 1) % testimonials.length;
-                    renderTestimonial();
-                });
-            }
-            setInterval(() => {
-                tIdx = (tIdx + 1) % testimonials.length;
-                renderTestimonial();
-            }, 5000);
         });
     </script>
 </body>
